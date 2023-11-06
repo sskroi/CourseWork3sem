@@ -6,6 +6,8 @@
 #include <format>
 using namespace std;
 
+class RouteList;
+
 class Route {
 private:
 	int number;

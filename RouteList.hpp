@@ -18,12 +18,10 @@ private:
 
 public:
 	Route(int number, const string& a, const string& b) :
-		number(number), start(a), end(b), next(nullptr), prev(nullptr) {
-	}
+		number(number), start(a), end(b), next(nullptr), prev(nullptr) {}
 
 	Route(const Route& r) :
-		number(r.number), start(r.start), end(r.end), next(r.next), prev(r.prev) {
-	}
+		number(r.number), start(r.start), end(r.end), next(r.next), prev(r.prev) {}
 
 	string str() {
 		return format("Номер маршрута: {:<3} | {} -> {}\n", this->number, this->start, this->end);

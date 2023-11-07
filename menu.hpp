@@ -9,6 +9,7 @@
 #include "RouteList.hpp"
 using namespace std;
 
+namespace menu {
 
 const string INPUT_STR = "Выберите дейсвтие: ";
 const string MENU_STR = "««« ГЛАВНОЕ МЕНЮ »»»\n1) Посмотреть список всех маршрутов\n2) Добавить маршрут\n3) Изменить маршрут\n4) Удалить маршрут\n5) Найти маршрут\n6) Отсортировать маршруты по номеру\n7) Сохранить БД\n0) Выход\n\n" + INPUT_STR;
@@ -181,4 +182,6 @@ void sortRouteList(RouteList& list) {
 		list.print();
 	}
 	backToMenu();
+}
+
 }

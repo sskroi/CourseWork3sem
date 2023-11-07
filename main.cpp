@@ -23,37 +23,37 @@ int main() {
         // основной цикл программы
         while (true) {
 
-            choice = mainMenuChoice();
+            choice = menu::mainMenuChoice();
 
             if (choice == 1) {
-                printRouteList(list);
+                menu::printRouteList(list);
             }
 
             else if (choice == 2) {
-                addInRouteListFromKeyBoard(list);
+                menu::addInRouteListFromKeyBoard(list);
             }
 
             else if (choice == 3) {
-                changeRoute(list);
+                menu::changeRoute(list);
             }
 
             else if (choice == 4) {
-                deleteByNumberFromKeyboard(list);
+                menu::deleteByNumberFromKeyboard(list);
             }
 
             else if (choice == 5) {
-                findRouteByNumberFromKeyboard(list);
+                menu::findRouteByNumberFromKeyboard(list);
             }
 
             else if (choice == 6) {
-                sortRouteList(list);
+                menu::sortRouteList(list);
             }
 
             else if (choice == 7) {
                 list.writeInFile("data.txt");
                 system("cls");
                 cout << "База данных сохранена" << endl;
-                backToMenu();
+                menu::backToMenu();
             }
 
             else if (choice == 0) {

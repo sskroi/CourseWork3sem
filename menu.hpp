@@ -10,9 +10,9 @@ using namespace std;
 namespace menu {
 
 const string INPUT_STR = "Выберите дейсвтие: ";
-const string MENU_STR = "««« ГЛАВНОЕ МЕНЮ »»»\n1) Посмотреть список всех маршрутов\n2) Добавить маршрут\n3) �?зменить маршрут\n4) Удалить маршрут\n5) Найти маршрут\n6) Отсортировать маршруты по номеру\n7) Сохранить БД\n0) Выход\n\n" + INPUT_STR;
+const string MENU_STR = "««« ГЛАВНОЕ МЕНЮ »»»\n1) Посмотреть список всех маршрутов\n2) Добавить маршрут\n3) Изменить маршрут\n4) Удалить маршрут\n5) Найти маршрут\n6) Отсортировать маршруты по номеру\n7) Сохранить БД\n0) Выход\n\n" + INPUT_STR;
 
-const string ROUTE_CHANGE_MENU_STR = "1) �?зменить номер\n2) �?зменить начальный пункт\n3) �?зменить конечный пункт\n4) Вернуться в главное меню\n\n" + INPUT_STR;
+const string ROUTE_CHANGE_MENU_STR = "1) Изменить номер\n2) Изменить начальный пункт\n3) Изменить конечный пункт\n4) Вернуться в главное меню\n\n" + INPUT_STR;
 
 const string REPEAT_INPUT_STR = "Нажмите любую клавишу для повторного ввода . . . ";
 
@@ -60,7 +60,7 @@ string inputStr(const string& text, size_t maxLen = 100) {
 
 int changeMenuChoice(int numOfRoute, RouteList& list) {
 	system("cls");
-	string header = "�?зменение - " + list.findByNum(numOfRoute);
+	string header = "Изменение - " + list.findByNum(numOfRoute);
 	cout << ROUTE_CHANGE_MENU_STR;
 	int choice = inputIntInRange(header + ROUTE_CHANGE_MENU_STR, 1, 4);
 	return choice;
@@ -142,7 +142,7 @@ void changeRoute(RouteList& list) {
 
 				list.changeStart(numOfRoute, new_start);
 
-				cout << "�?зменения внесены:" << endl;
+				cout << "Изменения внесены:" << endl;
 				cout << list.findByNum(numOfRoute);
 
 				backToMenu();
@@ -151,7 +151,7 @@ void changeRoute(RouteList& list) {
 
 				list.changeEnd(numOfRoute, new_end);
 
-				cout << "�?зменения внесены:" << endl;
+				cout << "Изменения внесены:" << endl;
 				cout << list.findByNum(numOfRoute);
 
 				backToMenu();

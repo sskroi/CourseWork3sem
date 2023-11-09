@@ -5,22 +5,19 @@ using namespace std;
 
 int main() {
     {
-        SetConsoleCP(1251);
-        SetConsoleOutputCP(1251);
-
-        // основной список, хранящий все маршруты
+        // РѕСЃРЅРѕРІРЅРѕР№ СЃРїРёСЃРѕРє, С…СЂР°РЅСЏС‰РёР№ РІСЃРµ РјР°СЂС€СЂСѓС‚С‹
         RouteList list;
 
-        // название файла с БД
+        // РЅР°Р·РІР°РЅРёРµ С„Р°Р№Р»Р° СЃ Р‘Р”
         const string filename = "data.txt";
 
-        // чтение БД
+        // С‡С‚РµРЅРёРµ Р‘Р”
         list.readFromFile(filename);
 
-        // переменная с выбором пользователя
+        // РїРµСЂРµРјРµРЅРЅР°СЏ СЃ РІС‹Р±РѕСЂРѕРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         int choice;
 
-        // основной цикл программы
+        // РѕСЃРЅРѕРІРЅРѕР№ С†РёРєР» РїСЂРѕРіСЂР°РјРјС‹
         while (true) {
 
             choice = menu::mainMenuChoice();
@@ -52,7 +49,7 @@ int main() {
             else if (choice == 7) {
                 list.writeInFile("data.txt");
                 system("cls");
-                cout << "База данных сохранена" << endl;
+                cout << "Р‘Р°Р·Р° РґР°РЅРЅС‹С… СЃРѕС…СЂР°РЅРµРЅР°" << endl;
                 menu::backToMenu();
             }
 

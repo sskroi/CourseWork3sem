@@ -24,7 +24,7 @@ public:
 		number(r.number), start(r.start), end(r.end), next(r.next), prev(r.prev) {}
 
 	string str() {
-		return format("Номер маршрута: {:<3} | {} -> {}\n", this->number, this->start, this->end);
+		return format("РќРѕРјРµСЂ РјР°СЂС€СЂСѓС‚Р°: {:<3} | {} -> {}\n", this->number, this->start, this->end);
 	}
 
 	friend RouteList;
@@ -132,7 +132,7 @@ public:
 		file >> length;
 		for (int i = 0; i < length; i++) {
 			file >> number;
-			getline(file >> ws, start); // file >> ws обеспечивает удаление всех пробелов и символов новой строки из начала потока
+			getline(file >> ws, start); // file >> ws РѕР±РµСЃРїРµС‡РёРІР°РµС‚ СѓРґР°Р»РµРЅРёРµ РІСЃРµС… РїСЂРѕР±РµР»РѕРІ Рё СЃРёРјРІРѕР»РѕРІ РЅРѕРІРѕР№ СЃС‚СЂРѕРєРё РёР· РЅР°С‡Р°Р»Р° РїРѕС‚РѕРєР°
 			getline(file >> ws, end);
 			this->append(Route(number, start, end));
 		}

@@ -3,23 +3,21 @@
 #include <sstream>
 #include <string>
 #include <fstream>
-#define byte win_byte_override // solving byte ambiguity
-#include <Windows.h>
 #include <conio.h>
 #include "RouteList.hpp"
 using namespace std;
 
 namespace menu {
 
-const string INPUT_STR = "Выберите дейсвтие: ";
-const string MENU_STR = "««« ГЛАВНОЕ МЕНЮ »»»\n1) Посмотреть список всех маршрутов\n2) Добавить маршрут\n3) Изменить маршрут\n4) Удалить маршрут\n5) Найти маршрут\n6) Отсортировать маршруты по номеру\n7) Сохранить БД\n0) Выход\n\n" + INPUT_STR;
+const string INPUT_STR = "Р’С‹Р±РµСЂРёС‚Рµ РґРµР№СЃРІС‚РёРµ: ";
+const string MENU_STR = "В«В«В« Р“Р›РђР’РќРћР• РњР•РќР® В»В»В»\n1) РџРѕСЃРјРѕС‚СЂРµС‚СЊ СЃРїРёСЃРѕРє РІСЃРµС… РјР°СЂС€СЂСѓС‚РѕРІ\n2) Р”РѕР±Р°РІРёС‚СЊ РјР°СЂС€СЂСѓС‚\n3) пїЅ?Р·РјРµРЅРёС‚СЊ РјР°СЂС€СЂСѓС‚\n4) РЈРґР°Р»РёС‚СЊ РјР°СЂС€СЂСѓС‚\n5) РќР°Р№С‚Рё РјР°СЂС€СЂСѓС‚\n6) РћС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ РјР°СЂС€СЂСѓС‚С‹ РїРѕ РЅРѕРјРµСЂСѓ\n7) РЎРѕС…СЂР°РЅРёС‚СЊ Р‘Р”\n0) Р’С‹С…РѕРґ\n\n" + INPUT_STR;
 
-const string ROUTE_CHANGE_MENU_STR = "1) Изменить номер\n2) Изменить начальный пункт\n3) Изменить конечный пункт\n4) Вернуться в главное меню\n\n" + INPUT_STR;
+const string ROUTE_CHANGE_MENU_STR = "1) пїЅ?Р·РјРµРЅРёС‚СЊ РЅРѕРјРµСЂ\n2) пїЅ?Р·РјРµРЅРёС‚СЊ РЅР°С‡Р°Р»СЊРЅС‹Р№ РїСѓРЅРєС‚\n3) пїЅ?Р·РјРµРЅРёС‚СЊ РєРѕРЅРµС‡РЅС‹Р№ РїСѓРЅРєС‚\n4) Р’РµСЂРЅСѓС‚СЊСЃСЏ РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ\n\n" + INPUT_STR;
 
-const string REPEAT_INPUT_STR = "Нажмите любую клавишу для повторного ввода . . . ";
+const string REPEAT_INPUT_STR = "РќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїРѕРІС‚РѕСЂРЅРѕРіРѕ РІРІРѕРґР° . . . ";
 
 
-int inputIntInRange(const string& text, int l = INT_MIN, int r = INT_MAX) { // фунуция для ввода целого числа в диапазоне [l;r]
+int inputIntInRange(const string& text, int l = INT_MIN, int r = INT_MAX) { // С„СѓРЅСѓС†РёСЏ РґР»СЏ РІРІРѕРґР° С†РµР»РѕРіРѕ С‡РёСЃР»Р° РІ РґРёР°РїР°Р·РѕРЅРµ [l;r]
 	int number;
 	string input;
 	while (true) {
@@ -28,7 +26,7 @@ int inputIntInRange(const string& text, int l = INT_MIN, int r = INT_MAX) { // ф
 		getline(cin, input);
 		stringstream stream(input);
 		if ((stream >> number && stream.eof()) && (number >= l && number <= r)) { return number; } else {
-			cout << "\nНекорректный ввод. Введите целое число в диапазоне [" << l << "; " << r << "]" << endl;
+			cout << "\nРќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ. Р’РІРµРґРёС‚Рµ С†РµР»РѕРµ С‡РёСЃР»Рѕ РІ РґРёР°РїР°Р·РѕРЅРµ [" << l << "; " << r << "]" << endl;
 			cout << REPEAT_INPUT_STR;
 			system("pause > nul");
 			cout << "\x1B[2A\r\x1B[0J";
@@ -49,10 +47,10 @@ string inputStr(const string& text, size_t maxLen = 100) {
 		cout << text;
 		getline(cin, s);
 		if (s.size() > 0 && s.size() <= maxLen) { return s; } else if (s.size() < 1) {
-			cout << "Некорректный ввод: вы ввели пустую строку\n\n" << REPEAT_INPUT_STR;
+			cout << "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ: РІС‹ РІРІРµР»Рё РїСѓСЃС‚СѓСЋ СЃС‚СЂРѕРєСѓ\n\n" << REPEAT_INPUT_STR;
 			system("pause > nul");
 		} else {
-			cout << "Некорректный ввод: слишком длинная строка. Максимальная длина - " + to_string(maxLen) + " символов\n\n"
+			cout << "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ: СЃР»РёС€РєРѕРј РґР»РёРЅРЅР°СЏ СЃС‚СЂРѕРєР°. РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґР»РёРЅР° - " + to_string(maxLen) + " СЃРёРјРІРѕР»РѕРІ\n\n"
 				<< REPEAT_INPUT_STR;
 			system("pause > nul");
 		}
@@ -62,77 +60,77 @@ string inputStr(const string& text, size_t maxLen = 100) {
 
 int changeMenuChoice(int numOfRoute, RouteList& list) {
 	system("cls");
-	string header = "Изменение - " + list.findByNum(numOfRoute);
+	string header = "пїЅ?Р·РјРµРЅРµРЅРёРµ - " + list.findByNum(numOfRoute);
 	cout << ROUTE_CHANGE_MENU_STR;
 	int choice = inputIntInRange(header + ROUTE_CHANGE_MENU_STR, 1, 4);
 	return choice;
 }
 
 void backToMenu() {
-	cout << endl << "Нажмите любую клавишу чтобы вернуться в меню . . . ";
+	cout << endl << "РќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ С‡С‚РѕР±С‹ РІРµСЂРЅСѓС‚СЊСЃСЏ РІ РјРµРЅСЋ . . . ";
 	system("pause > nul");
 }
 
 void addInRouteListFromKeyBoard(RouteList& list) {
 	int n;
 	while (true) {
-		n = inputIntInRange("Введите номер добавляемого маршрута", 1);
+		n = inputIntInRange("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РґРѕР±Р°РІР»СЏРµРјРѕРіРѕ РјР°СЂС€СЂСѓС‚Р°", 1);
 		if (!list.isRouteInList(n)) { break; } else {
-			cout << "Ошибка: маршрут с таким номером уже существует" << endl;
-			cout << "Нажмите любую клавишу для повторного ввода номера маршрута . . . ";
+			cout << "РћС€РёР±РєР°: РјР°СЂС€СЂСѓС‚ СЃ С‚Р°РєРёРј РЅРѕРјРµСЂРѕРј СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚" << endl;
+			cout << "РќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїРѕРІС‚РѕСЂРЅРѕРіРѕ РІРІРѕРґР° РЅРѕРјРµСЂР° РјР°СЂС€СЂСѓС‚Р° . . . ";
 			system("pause > nul");
 		}
 	}
-	string start = inputStr("Введите начальный пункт маршрута");
-	string end = inputStr("Введите конечный пункт маршрута");
+	string start = inputStr("Р’РІРµРґРёС‚Рµ РЅР°С‡Р°Р»СЊРЅС‹Р№ РїСѓРЅРєС‚ РјР°СЂС€СЂСѓС‚Р°");
+	string end = inputStr("Р’РІРµРґРёС‚Рµ РєРѕРЅРµС‡РЅС‹Р№ РїСѓРЅРєС‚ РјР°СЂС€СЂСѓС‚Р°");
 	list.append(Route(n, start, end));
 	system("cls");
-	cout << "Маршрут успешно добавлен: " << endl;
+	cout << "РњР°СЂС€СЂСѓС‚ СѓСЃРїРµС€РЅРѕ РґРѕР±Р°РІР»РµРЅ: " << endl;
 	list.findByNum(n);
 	backToMenu();
 }
 
 void findRouteByNumberFromKeyboard(RouteList& list) {
-	int n = inputIntInRange("Введите номер маршрута, который хотите найти", 1);
+	int n = inputIntInRange("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РјР°СЂС€СЂСѓС‚Р°, РєРѕС‚РѕСЂС‹Р№ С…РѕС‚РёС‚Рµ РЅР°Р№С‚Рё", 1);
 	list.findByNum(n);
 	backToMenu();
 }
 
 void deleteByNumberFromKeyboard(RouteList& list) {
-	int n = inputIntInRange("Введите номер маршрута, который хотите удалить", 1);
+	int n = inputIntInRange("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РјР°СЂС€СЂСѓС‚Р°, РєРѕС‚РѕСЂС‹Р№ С…РѕС‚РёС‚Рµ СѓРґР°Р»РёС‚СЊ", 1);
 	list.deleteByNum(n);
 	backToMenu();
 }
 
 void printRouteList(RouteList& list) {
 	system("cls");
-	if (list.isEmpty()) { cout << "Список маршрутов пуст" << endl; } else {
-		cout << "Список всех маршрутов:" << endl;
+	if (list.isEmpty()) { cout << "РЎРїРёСЃРѕРє РјР°СЂС€СЂСѓС‚РѕРІ РїСѓСЃС‚" << endl; } else {
+		cout << "РЎРїРёСЃРѕРє РІСЃРµС… РјР°СЂС€СЂСѓС‚РѕРІ:" << endl;
 		list.print();
 	}
 	backToMenu();
 }
 
 void changeRoute(RouteList& list) {
-	int numOfRoute = inputIntInRange("Введите номер маршрута, который хотите изменить: ", 1);
+	int numOfRoute = inputIntInRange("Р’РІРµРґРёС‚Рµ РЅРѕРјРµСЂ РјР°СЂС€СЂСѓС‚Р°, РєРѕС‚РѕСЂС‹Р№ С…РѕС‚РёС‚Рµ РёР·РјРµРЅРёС‚СЊ: ", 1);
 
 	if (!list.isRouteInList(numOfRoute)) {
-		cout << "Маршрут с таким номером не существует" << endl;
+		cout << "РњР°СЂС€СЂСѓС‚ СЃ С‚Р°РєРёРј РЅРѕРјРµСЂРѕРј РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚" << endl;
 	} else {
 		int choice;
 		while (true) {
 			choice = changeMenuChoice(numOfRoute, list);
 
 			if (choice == 1) {
-				int newNumOfRoute = inputIntInRange("Введите новый номер маршрута: ");
+				int newNumOfRoute = inputIntInRange("Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РЅРѕРјРµСЂ РјР°СЂС€СЂСѓС‚Р°: ");
 
 				if (list.isRouteInList(newNumOfRoute)) {
-					cout << "Маршрут с таким номером уже существует" << endl;
+					cout << "РњР°СЂС€СЂСѓС‚ СЃ С‚Р°РєРёРј РЅРѕРјРµСЂРѕРј СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚" << endl;
 					backToMenu();
 				} else {
 					list.changeNumber(numOfRoute, newNumOfRoute);
 
-					cout << "Номер маршрута изменён с " << numOfRoute << " на " << newNumOfRoute << endl;
+					cout << "РќРѕРјРµСЂ РјР°СЂС€СЂСѓС‚Р° РёР·РјРµРЅС‘РЅ СЃ " << numOfRoute << " РЅР° " << newNumOfRoute << endl;
 					cout << list.findByNum(newNumOfRoute);
 
 					numOfRoute = newNumOfRoute;
@@ -140,20 +138,20 @@ void changeRoute(RouteList& list) {
 					backToMenu();
 				}
 			} else if (choice == 2) {
-				string new_start = inputStr("Введите новый начальный пункт: ");
+				string new_start = inputStr("Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РЅР°С‡Р°Р»СЊРЅС‹Р№ РїСѓРЅРєС‚: ");
 
 				list.changeStart(numOfRoute, new_start);
 
-				cout << "Изменения внесены:" << endl;
+				cout << "пїЅ?Р·РјРµРЅРµРЅРёСЏ РІРЅРµСЃРµРЅС‹:" << endl;
 				cout << list.findByNum(numOfRoute);
 
 				backToMenu();
 			} else if (choice == 3) {
-				string new_end = inputStr("Введите новый конечный пункт: ");
+				string new_end = inputStr("Р’РІРµРґРёС‚Рµ РЅРѕРІС‹Р№ РєРѕРЅРµС‡РЅС‹Р№ РїСѓРЅРєС‚: ");
 
 				list.changeEnd(numOfRoute, new_end);
 
-				cout << "Изменения внесены:" << endl;
+				cout << "пїЅ?Р·РјРµРЅРµРЅРёСЏ РІРЅРµСЃРµРЅС‹:" << endl;
 				cout << list.findByNum(numOfRoute);
 
 				backToMenu();
@@ -167,18 +165,18 @@ void changeRoute(RouteList& list) {
 
 void sortRouteList(RouteList& list) {
 	system("cls");
-	if (list.isEmpty()) { cout << "Список маршрутов пуст" << endl; } else {
+	if (list.isEmpty()) { cout << "РЎРїРёСЃРѕРє РјР°СЂС€СЂСѓС‚РѕРІ РїСѓСЃС‚" << endl; } else {
 		if (list.getLen() > 5000) {
-			cout << "Объем данных слишком большой. Сортировка может занять длительное время." << endl;
-			cout << "НЕ рекомендуется делать сортировку с таким объёмом данных." << endl;
-			cout << "Если вы желаете продолжить нажмите 0\n\nЛюбая другая клавиша отменит действие . . . ";
+			cout << "РћР±СЉРµРј РґР°РЅРЅС‹С… СЃР»РёС€РєРѕРј Р±РѕР»СЊС€РѕР№. РЎРѕСЂС‚РёСЂРѕРІРєР° РјРѕР¶РµС‚ Р·Р°РЅСЏС‚СЊ РґР»РёС‚РµР»СЊРЅРѕРµ РІСЂРµРјСЏ." << endl;
+			cout << "РќР• СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РґРµР»Р°С‚СЊ СЃРѕСЂС‚РёСЂРѕРІРєСѓ СЃ С‚Р°РєРёРј РѕР±СЉС‘РјРѕРј РґР°РЅРЅС‹С…." << endl;
+			cout << "Р•СЃР»Рё РІС‹ Р¶РµР»Р°РµС‚Рµ РїСЂРѕРґРѕР»Р¶РёС‚СЊ РЅР°Р¶РјРёС‚Рµ 0\n\nР›СЋР±Р°СЏ РґСЂСѓРіР°СЏ РєР»Р°РІРёС€Р° РѕС‚РјРµРЅРёС‚ РґРµР№СЃС‚РІРёРµ . . . ";
 			char ch = _getch();
 			if (ch != '0') { return; }
 			system("cls");
-			cout << "Начат процесс сортировки. Ожидайте." << endl;
+			cout << "РќР°С‡Р°С‚ РїСЂРѕС†РµСЃСЃ СЃРѕСЂС‚РёСЂРѕРІРєРё. РћР¶РёРґР°Р№С‚Рµ." << endl;
 		}
 		list.sort();
-		cout << "Список маршрутов отсортирован:" << endl;
+		cout << "РЎРїРёСЃРѕРє РјР°СЂС€СЂСѓС‚РѕРІ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅ:" << endl;
 		list.print();
 	}
 	backToMenu();

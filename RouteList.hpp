@@ -15,6 +15,7 @@ private:
 	string end;
 	Route* next;
 	Route* prev;
+	friend RouteList;
 
 public:
 	Route(int number, const string& a, const string& b) :
@@ -26,22 +27,20 @@ public:
 	string str() {
 		return format("Номер маршрута: {:<3} | {} -> {}\n", this->number, this->start, this->end);
 	}
-
-	friend RouteList;
 };
 
 
 class RouteList {
 private:
 	Route* head;
-	size_t len;
+	size_t _size;
 
 public:
-	RouteList() : head(nullptr), len(0) {}
+	RouteList() : head(nullptr), _size(0) {}
 
 	void append(const Route& route) {
 		Route* newNode = new Route(route);
-		this->len++;
+		this->_size++;
 
 		if (this->head == nullptr) {
 			this->head = newNode;
@@ -61,7 +60,7 @@ public:
 		if (!this->isRouteInList(numOfRoute) || this->head == nullptr) {
 			throw range_error("the route with this number is not in the list");
 		} else {
-			this->len--;
+			this->_size--;
 			Route* cur = this->head;
 
 			while (cur->number != numOfRoute) {
@@ -96,13 +95,7 @@ public:
 		return false;
 	}
 
-	bool isEmpty() {
-		if (this->head == nullptr) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	bool isEmpty() { return this->head == nullptr; }
 
 	string findByNum(int numOfRoute) {
 		Route* cur = this->head;
@@ -115,41 +108,6 @@ public:
 		}
 
 		throw range_error("the route with this number is not in the list");
-	}
-
-	void readFromFile(const string name) {
-		ifstream file(name, ios::in);
-		if (!file.is_open()) {
-			ofstream new_file(name, ios::out);
-			new_file << 0 << endl;
-			new_file.close();
-			return;
-		}
-		int length = 0;
-		int number;
-		string start;
-		string end;
-		file >> length;
-		for (int i = 0; i < length; i++) {
-			file >> number;
-			getline(file >> ws, start); // file >> ws обеспечивает удаление всех пробелов и символов новой строки из начала потока
-			getline(file >> ws, end);
-			this->append(Route(number, start, end));
-		}
-		file.close();
-	}
-
-	void writeInFile(const string& name) {
-		ofstream file(name, ios::out);
-		file << this->len << endl;
-		Route* cur = this->head;
-		for (int i = 0; i < this->len; i++) {
-			file << cur->number << endl;
-			file << cur->start << endl;
-			file << cur->end << endl;
-			cur = cur->next;
-		}
-		file.close();
 	}
 
 	void changeNumber(int old_num, int new_num) {
@@ -176,9 +134,7 @@ public:
 		cur->end = new_end;
 	}
 
-	size_t getLen() {
-		return this->len;
-	}
+	size_t size() { return this->_size; }
 
 	void print() {
 		Route* cur = this->head;
@@ -189,15 +145,15 @@ public:
 	}
 
 	void sort() {
-		if (len < 2) { return; }
+		if (_size < 2) { return; }
 		Route* cur;
 		Route* next;
 		int tempN;
 		string tempStart;
 		string tempEnd;
-		for (int i = 0; i < (this->len - 1); i++) {
+		for (size_t i = 0; i < (this->_size - 1); i++) {
 			cur = this->head;
-			for (int j = 0; j < (this->len - i - 1); j++) {
+			for (size_t j = 0; j < (this->_size - i - 1); j++) {
 				if (cur->number > cur->next->number) {
 					next = cur->next;
 					tempN = cur->number;
@@ -213,6 +169,43 @@ public:
 				cur = cur->next;
 			}
 		}
+	}
+
+	void readFromFile(const string name) {
+		ifstream file(name, ios::in);
+
+		if (!file.is_open()) { return; }
+
+		size_t listSize;
+
+		int routeNum;
+		string routeStart;
+		string routeEnd;
+
+		file >> ws >> listSize;
+		for (size_t i = 0; i < listSize; i++) {
+			file >> ws >> routeNum;
+			getline(file >> ws, routeStart); // file >> ws обеспечивает удаление всех пробелов и символов новой строки из начала потока
+			getline(file >> ws, routeEnd);
+			this->append(Route(routeNum, routeStart, routeEnd));
+		}
+		file.close();
+	}
+
+	void writeInFile(const string& name) {
+		ofstream file(name, ios::out);
+
+		file << this->_size << "\n";
+
+		Route* cur = this->head;
+		for (size_t i = 0; i < this->_size; i++) {
+			file << cur->number << "\n";
+			file << cur->start << "\n";
+			file << cur->end << "\n";
+
+			cur = cur->next;
+		}
+		file.close();
 	}
 
 	~RouteList() {

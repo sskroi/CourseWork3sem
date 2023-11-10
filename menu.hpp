@@ -166,7 +166,7 @@ void changeRoute(RouteList& list) {
 void sortRouteList(RouteList& list) {
 	system("cls");
 	if (list.isEmpty()) { cout << "Список маршрутов пуст" << endl; } else {
-		if (list.getLen() > 5000) {
+		if (list.size() > 5000) {
 			cout << "Объем данных слишком большой. Сортировка может занять длительное время." << endl;
 			cout << "НЕ рекомендуется делать сортировку с таким объёмом данных." << endl;
 			cout << "Если вы желаете продолжить нажмите 0\n\nЛюбая другая клавиша отменит действие . . . ";

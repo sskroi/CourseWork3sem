@@ -16,53 +16,60 @@ const string ROUTE_CHANGE_MENU_STR = "1) Изменить номер\n2) Изм�
 
 const string REPEAT_INPUT_STR = "Нажмите любую клавишу для повторного ввода . . . ";
 
-
-int inputIntInRange(const string& text, int l = INT_MIN, int r = INT_MAX) { // фунуция для ввода целого числа в диапазоне [l;r]
+// фунуция для ввода целого числа в диапазоне [l;r]
+int inputInt(const string& text, int l = INT_MIN, int r = INT_MAX) {
 	int number;
 	string input;
+
 	while (true) {
 		system("cls");
 		cout << text;
+
 		getline(cin, input);
 		stringstream stream(input);
-		if ((stream >> number && stream.eof()) && (number >= l && number <= r)) { return number; } else {
+
+		if ((stream >> number && stream.eof()) && (number >= l && number <= r)) {
+			return number;
+		} else {
 			cout << "\nНекорректный ввод. Введите целое число в диапазоне [" << l << "; " << r << "]" << endl;
 			cout << REPEAT_INPUT_STR;
 			system("pause > nul");
-			cout << "\x1B[2A\r\x1B[0J";
 		}
+	}
+}
+
+// функция для ввода строки с ограничением максимальной длины
+string inputString(const string& text, size_t maxLen = 100) {
+	string input = "";
+
+	while (true) {
+		system("cls");
+		cout << text;
+
+		getline(cin, input);
+
+		if (input.size() > 0 && input.size() <= maxLen) {
+			return input;
+		} else if (input.size() < 1) {
+			cout << "\nНекорректный ввод: вы ввели пустую строку" << endl;
+		} else {
+			cout << "\nНекорректный ввод: максимальная длина строки - " + to_string(maxLen) + " символов" << endl;
+		}
+		cout << REPEAT_INPUT_STR;
+		system("pause > nul");
 	}
 }
 
 int mainMenuChoice() {
 	system("cls");
-	int choice = inputIntInRange(MENU_STR, 0, 7);
+	int choice = inputInt(MENU_STR, 0, 7);
 	return choice;
-}
-
-string inputStr(const string& text, size_t maxLen = 100) {
-	string s = "";
-	while (true) {
-		system("cls");
-		cout << text;
-		getline(cin, s);
-		if (s.size() > 0 && s.size() <= maxLen) { return s; } else if (s.size() < 1) {
-			cout << "Некорректный ввод: вы ввели пустую строку\n\n" << REPEAT_INPUT_STR;
-			system("pause > nul");
-		} else {
-			cout << "Некорректный ввод: слишком длинная строка. Максимальная длина - " + to_string(maxLen) + " символов\n\n"
-				<< REPEAT_INPUT_STR;
-			system("pause > nul");
-		}
-	}
-	return s;
 }
 
 int changeMenuChoice(int numOfRoute, RouteList& list) {
 	system("cls");
-	string header = "Изменение - " + list.findByNum(numOfRoute);
-	cout << ROUTE_CHANGE_MENU_STR;
-	int choice = inputIntInRange(header + ROUTE_CHANGE_MENU_STR, 1, 4);
+	string header = "Изменение - " + list.findByNum(numOfRoute).str();
+	int choice = inputInt(header + ROUTE_CHANGE_MENU_STR, 1, 4);
 	return choice;
 }
 
@@ -74,30 +81,33 @@ void backToMenu() {
 void addInRouteListFromKeyBoard(RouteList& list) {
 	int n;
 	while (true) {
-		n = inputIntInRange("Введите номер добавляемого маршрута", 1);
-		if (!list.isRouteInList(n)) { break; } else {
+		n = inputInt("Введите номер добавляемого маршрута: ", 1);
+		if (!list.isRouteInList(n)) {
+			break;
+		} else {
 			cout << "Ошибка: маршрут с таким номером уже существует" << endl;
-			cout << "Нажмите любую клавишу для повторного ввода номера маршрута . . . ";
+			cout << REPEAT_INPUT_STR;
 			system("pause > nul");
 		}
 	}
-	string start = inputStr("Введите начальный пункт маршрута");
-	string end = inputStr("Введите конечный пункт маршрута");
+	string start = inputString("Введите начальный пункт маршрута: ");
+	string end = inputString("Введите конечный пункт маршрута: ");
+
 	list.append(Route(n, start, end));
+
 	system("cls");
-	cout << "Маршрут успешно добавлен: " << endl;
-	list.findByNum(n);
+	cout << "Маршрут успешно добавлен:\n\n" << list.findByNum(n);
 	backToMenu();
 }
 
 void findRouteByNumberFromKeyboard(RouteList& list) {
-	int n = inputIntInRange("Введите номер маршрута, который хотите найти", 1);
+	int n = inputInt("Введите номер маршрута, который хотите найти", 1);
 	list.findByNum(n);
 	backToMenu();
 }
 
 void deleteByNumberFromKeyboard(RouteList& list) {
-	int n = inputIntInRange("Введите номер маршрута, который хотите удалить", 1);
+	int n = inputInt("Введите номер маршрута, который хотите удалить", 1);
 	list.deleteByNum(n);
 	backToMenu();
 }
@@ -112,7 +122,7 @@ void printRouteList(RouteList& list) {
 }
 
 void changeRoute(RouteList& list) {
-	int numOfRoute = inputIntInRange("Введите номер маршрута, который хотите изменить: ", 1);
+	int numOfRoute = inputInt("Введите номер маршрута, который хотите изменить: ", 1);
 
 	if (!list.isRouteInList(numOfRoute)) {
 		cout << "Маршрут с таким номером не существует" << endl;
@@ -122,7 +132,7 @@ void changeRoute(RouteList& list) {
 			choice = changeMenuChoice(numOfRoute, list);
 
 			if (choice == 1) {
-				int newNumOfRoute = inputIntInRange("Введите новый номер маршрута: ");
+				int newNumOfRoute = inputInt("Введите новый номер маршрута: ");
 
 				if (list.isRouteInList(newNumOfRoute)) {
 					cout << "Маршрут с таким номером уже существует" << endl;
@@ -138,7 +148,7 @@ void changeRoute(RouteList& list) {
 					backToMenu();
 				}
 			} else if (choice == 2) {
-				string new_start = inputStr("Введите новый начальный пункт: ");
+				string new_start = inputString("Введите новый начальный пункт: ");
 
 				list.changeStart(numOfRoute, new_start);
 
@@ -147,7 +157,7 @@ void changeRoute(RouteList& list) {
 
 				backToMenu();
 			} else if (choice == 3) {
-				string new_end = inputStr("Введите новый конечный пункт: ");
+				string new_end = inputString("Введите новый конечный пункт: ");
 
 				list.changeEnd(numOfRoute, new_end);
 

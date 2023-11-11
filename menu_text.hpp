@@ -16,6 +16,7 @@ const string MENU_STR =
 "6) Отсортировать маршруты по номеру\n"
 "7) Сохранить БД\n"
 "0) Выход\n\n" + INPUT_STR;
+const int MENU_ITEMS_COUNT = 7;
 
 const string ROUTE_CHANGE_MENU_STR =
 "1) Изменить номер\n"

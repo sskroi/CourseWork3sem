@@ -59,7 +59,7 @@ string inputString(const string& text, size_t maxLen = 100) {
 
 int mainMenuChoice() {
 	system("cls");
-	int choice = inputInt(MENU_STR, 0, 7);
+	int choice = inputInt(MENU_STR, 0, MENU_ITEMS_COUNT);
 	return choice;
 }
 

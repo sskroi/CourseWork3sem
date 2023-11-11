@@ -18,12 +18,6 @@ const string MENU_STR =
 "0) Выход\n\n" + INPUT_STR;
 const int MENU_ITEMS_COUNT = 7;
 
-const string ROUTE_CHANGE_MENU_STR =
-"1) Изменить номер\n"
-"2) Изменить начальный пункт\n"
-"3) Изменить конечный пункт\n"
-"4) Вернуться в главное меню\n\n" + INPUT_STR;
-
 const string REPEAT_INPUT_STR = "Нажмите любую клавишу для повторного ввода . . . ";
 
 const string EMPTY_STRING_STR = "\n" + INCORRECT_INPUT_STR + "вы ввели пустую строку\n";
@@ -35,6 +29,26 @@ const string ADDING_START_STR = "Введите начальный пункт м
 const string ADDING_END_STR = "Введите конечный пункт маршрута: ";
 const string ADDING_SUCCESS_STR = "Маршрут успешно добавлен:\n\n";
 
+// finding
+const string ROUTE_FIND_MENU_STR =
+"1) Найти по номеру\n"
+"2) Найти по пункту отправлению\n"
+"3) Найти по пункту прибытия\n"
+"0) Вернуться в главное меню\n\n" + INPUT_STR;
+const int ROUTE_FIND_MENU_ITEMS_COUNT_STR = 3;
+const string FINDING_NUM_STR = "Введите номер маршрута, который хотите найти: ";
+const string FINDING_START_STR = "Введите стартовый пункт маршрута, который хотите найти: ";
+const string FINDING_END_STR = "Введите конечный пункт маршрута, который хотите найти: ";
+const string FINDING_RESULT_STR = "Результаты поиска:\n";
+const string FINDING_NO_RESULT_STR = "По вашему запросу ничего не найдено";
+
+
+const string ROUTE_CHANGE_MENU_STR =
+"1) Изменить номер\n"
+"2) Изменить начальный пункт\n"
+"3) Изменить конечный пункт\n"
+"0) Вернуться в главное меню\n\n" + INPUT_STR;
+const int ROUTE_CHANGE_MENU_ITEMS_COUNT = 3;
 
 string incorrectIntInputStr(int l, int r) {
     stringstream stream;

@@ -160,12 +160,12 @@ public:
 		}
 	}
 
-	string findByNum(int numOfRoute) {
+	Route& findByNum(int numOfRoute) {
 		Route* cur = this->head;
 
 		while (cur != nullptr) {
 			if (cur->number == numOfRoute) {
-				return cur->str();
+				return *cur;
 			}
 			cur = cur->next;
 		}

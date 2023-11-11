@@ -5,29 +5,10 @@
 #include <fstream>
 #include <conio.h>
 #include "RouteList.hpp"
+#include "menu_text.hpp"
 using namespace std;
 
 namespace menu {
-
-const string INPUT_STR = "Выберите дейсвтие: ";
-const string MENU_STR =
-"««« ГЛАВНОЕ МЕНЮ »»»"
-"1) Посмотреть список всех маршрутов\n"
-"2) Добавить маршрут\n"
-"3) Изменить маршрут\n"
-"4) Удалить маршрут\n"
-"5) Найти маршрут\n"
-"6) Отсортировать маршруты по номеру\n"
-"7) Сохранить БД\n"
-"0) Выход\n\n" + INPUT_STR;
-
-const string ROUTE_CHANGE_MENU_STR =
-"1) Изменить номер\n"
-"2) Изменить начальный пункт\n"
-"3) Изменить конечный пункт\n"
-"4) Вернуться в главное меню\n\n" + INPUT_STR;
-
-const string REPEAT_INPUT_STR = "Нажмите любую клавишу для повторного ввода . . . ";
 
 // фунуция для ввода целого числа в диапазоне [l;r]
 int inputInt(const string& text, int l = INT_MIN, int r = INT_MAX) {
@@ -44,7 +25,7 @@ int inputInt(const string& text, int l = INT_MIN, int r = INT_MAX) {
 		if ((stream >> number && stream.eof()) && (number >= l && number <= r)) {
 			return number;
 		} else {
-			cout << "\nНекорректный ввод. Введите целое число в диапазоне [" << l << "; " << r << "]" << endl;
+			cout << incorrectIntInputStr(l, r);
 			cout << REPEAT_INPUT_STR;
 			system("pause > nul");
 		}
@@ -63,13 +44,15 @@ string inputString(const string& text, size_t maxLen = 100) {
 
 		if (input.size() > 0 && input.size() <= maxLen) {
 			return input;
-		} else if (input.size() < 1) {
-			cout << "\nНекорректный ввод: вы ввели пустую строку" << endl;
 		} else {
-			cout << "\nНекорректный ввод: максимальная длина строки - " + to_string(maxLen) + " символов" << endl;
+			if (input.size() < 1) {
+				cout << EMPTY_STRING_STR;
+			} else {
+				cout << incorrectInputStringLenStr(maxLen);
+			}
+			cout << REPEAT_INPUT_STR;
+			system("pause > nul");
 		}
-		cout << REPEAT_INPUT_STR;
-		system("pause > nul");
 	}
 }
 

@@ -33,14 +33,32 @@ ostream& operator<<(ostream& os, Route& route) {
 	return os;
 }
 
+class RouteNotExistErr : public std::range_error {
+public:
+	RouteNotExistErr(const string& msg) : std::range_error(msg) {}
+};
 
 class RouteList {
 private:
-	Route* head;
-	size_t _size;
+	Route* head = nullptr;
+	size_t _size = 0;
 
 public:
-	RouteList() : head(nullptr), _size(0) {}
+	RouteList() {}
+
+	RouteList(Route& route) {
+		this->append(route);
+	}
+
+	RouteList(const RouteList& other) {
+		Route* cur = other.head;
+
+		while (cur != nullptr) {
+			this->append(*cur);
+
+			cur = cur->next;
+		}
+	}
 
 	void append(const Route& route) {
 		Route* newNode = new Route(route);
@@ -170,7 +188,7 @@ public:
 			cur = cur->next;
 		}
 
-		throw range_error("the route with this number is not in the list");
+		throw RouteNotExistErr("the route with this number is not in the list");
 	}
 
 	void readFromFile(const string name) {

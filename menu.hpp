@@ -76,24 +76,26 @@ void backToMenu() {
 }
 
 void addInRouteListFromKeyBoard(RouteList& list) {
-	int n;
+	int newRouteNum;
+
 	while (true) {
-		n = inputInt("Введите номер добавляемого маршрута: ", 1);
-		if (!list.isRouteInList(n)) {
+		newRouteNum = inputInt(ADDING_ROUTE_NUM_STR, 1);
+
+		if (!list.isRouteInList(newRouteNum)) {
 			break;
 		} else {
-			cout << "Ошибка: маршрут с таким номером уже существует" << endl;
+			cout << ADDING_ALREADY_EXIST_STR;
 			cout << REPEAT_INPUT_STR;
 			system("pause > nul");
 		}
 	}
-	string start = inputString("Введите начальный пункт маршрута: ");
-	string end = inputString("Введите конечный пункт маршрута: ");
+	string start = inputString(ADDING_START_STR);
+	string end = inputString(ADDING_END_STR);
 
-	list.append(Route(n, start, end));
+	list.append(Route(newRouteNum, start, end));
 
 	system("cls");
-	cout << "Маршрут успешно добавлен:\n\n" << list.findByNum(n);
+	cout << ADDING_SUCCESS_STR << list.findByNum(newRouteNum);
 	backToMenu();
 }
 

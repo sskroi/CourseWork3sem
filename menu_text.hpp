@@ -27,6 +27,14 @@ const string REPEAT_INPUT_STR = "Нажмите любую клавишу для
 
 const string EMPTY_STRING_STR = "\n" + INCORRECT_INPUT_STR + "вы ввели пустую строку\n";
 
+// adding
+const string ADDING_ROUTE_NUM_STR = "Введите номер добавляемого маршрута: ";
+const string ADDING_ALREADY_EXIST_STR = "Ошибка: маршрут с таким номером уже существует\n";
+const string ADDING_START_STR = "Введите начальный пункт маршрута: ";
+const string ADDING_END_STR = "Введите конечный пункт маршрута: ";
+const string ADDING_SUCCESS_STR = "Маршрут успешно добавлен:\n\n";
+
+
 string incorrectIntInputStr(int l, int r) {
     stringstream stream;
 

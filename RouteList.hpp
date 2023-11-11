@@ -25,9 +25,13 @@ public:
 		number(r.number), start(r.start), end(r.end), next(r.next), prev(r.prev) {}
 
 	string str() {
-		return format("Номер маршрута: {:<3} | {} -> {}\n", this->number, this->start, this->end);
+		return format("Номер: {:<3} | {} -> {}\n", this->number, this->start, this->end);
 	}
 };
+ostream& operator<<(ostream& os, Route& route) {
+	os << route.str();
+	return os;
+}
 
 
 class RouteList {
@@ -95,21 +99,6 @@ public:
 		return false;
 	}
 
-	bool isEmpty() { return this->head == nullptr; }
-
-	string findByNum(int numOfRoute) {
-		Route* cur = this->head;
-
-		while (cur != nullptr) {
-			if (cur->number == numOfRoute) {
-				return cur->str();
-			}
-			cur = cur->next;
-		}
-
-		throw range_error("the route with this number is not in the list");
-	}
-
 	void changeNumber(int old_num, int new_num) {
 		Route* cur = this->head;
 		while (cur->number != old_num) {
@@ -171,6 +160,19 @@ public:
 		}
 	}
 
+	string findByNum(int numOfRoute) {
+		Route* cur = this->head;
+
+		while (cur != nullptr) {
+			if (cur->number == numOfRoute) {
+				return cur->str();
+			}
+			cur = cur->next;
+		}
+
+		throw range_error("the route with this number is not in the list");
+	}
+
 	void readFromFile(const string name) {
 		ifstream file(name, ios::in);
 
@@ -206,6 +208,10 @@ public:
 			cur = cur->next;
 		}
 		file.close();
+	}
+
+	bool isEmpty() {
+		return this->head == nullptr;
 	}
 
 	~RouteList() {

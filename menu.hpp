@@ -32,6 +32,7 @@ int inputInt(const string& text, int l = INT_MIN, int r = INT_MAX) {
 	}
 }
 
+size_t countUTF8Chars(const std::string& str);
 // функция для ввода строки с ограничением максимальной длины
 string inputString(const string& text, size_t maxLen = 100) {
 	string input = "";
@@ -42,10 +43,10 @@ string inputString(const string& text, size_t maxLen = 100) {
 
 		getline(cin, input);
 
-		if (input.size() > 0 && input.size() <= maxLen) {
+		if (input.size() > 0 && countUTF8Chars(input) <= maxLen) {
 			return input;
 		} else {
-			if (input.size() < 1) {
+			if (countUTF8Chars(input) < 1) {
 				cout << EMPTY_STRING_STR;
 			} else {
 				cout << incorrectInputStringLenStr(maxLen);
@@ -186,6 +187,32 @@ void sortRouteList(RouteList& list) {
 		list.print();
 	}
 	backToMenu();
+}
+
+size_t countUTF8Chars(const std::string& str) {
+	size_t count = 0;
+	for (size_t i = 0; i < str.length(); ) {
+		unsigned char ch = static_cast<unsigned char>(str[i]);
+
+		if (ch <= 0x7F) {
+			// single byte character
+			++count;
+			++i;
+		} else if (ch <= 0xDF) {
+			// two byte character
+			count += 1;
+			i += 2;
+		} else if (ch <= 0xEF) {
+			// three byte character
+			count += 1;
+			i += 3;
+		} else {
+			// four byte character
+			count += 1;
+			i += 4;
+		}
+	}
+	return count;
 }
 
 }

@@ -61,7 +61,7 @@ public:
 	}
 
 	void deleteByNum(int numOfRoute) {
-		if (!this->isRouteInList(numOfRoute) || this->head == nullptr) {
+		if (!this->isRouteInList(numOfRoute)) {
 			throw range_error("the route with this number is not in the list");
 		} else {
 			this->_size--;

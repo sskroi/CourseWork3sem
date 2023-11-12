@@ -34,7 +34,7 @@ int inputInt(const string& text, int l = INT_MIN, int r = INT_MAX) {
 
 size_t countUTF8Chars(const std::string& str);
 // функция для ввода строки с ограничением максимальной длины
-string inputString(const string& text, size_t maxLen = 100) {
+string inputString(const string& text, size_t maxLen = 100ULL) {
 	string input = "";
 
 	while (true) {
@@ -59,7 +59,7 @@ string inputString(const string& text, size_t maxLen = 100) {
 
 int mainMenuChoice() {
 	system("cls");
-	int choice = inputInt(MENU_STR, 0, MENU_ITEMS_COUNT);
+	int choice = inputInt(MAIN_MENU_STR, 0, MAIN_MENU_ITEMS_COUNT);
 	return choice;
 }
 
@@ -108,14 +108,7 @@ void findRoute(RouteList& list) {
 	}
 }
 
-int changeMenuChoice(int numOfRoute, RouteList& list) {
-	system("cls");
-	string header = "Изменение - " + list.findByNum(numOfRoute).str();
-	int choice = inputInt(header + ROUTE_CHANGE_MENU_STR, 1, 4);
-	return choice;
-}
-
-void addInRouteList(RouteList& list) {
+void addRoute(RouteList& list) {
 	int newRouteNum;
 
 	while (true) {
@@ -152,89 +145,75 @@ void deleteRoute(RouteList& list) {
 	backToMenu();
 }
 
-void findRouteByNumberFromKeyboard(RouteList& list) {
-	int n = inputInt("Введите номер маршрута, который хотите найти", 1);
-	list.findByNum(n);
-	backToMenu();
-}
-
 void printRouteList(RouteList& list) {
 	system("cls");
-	if (list.isEmpty()) { cout << "Список маршрутов пуст" << endl; } else {
-		cout << "Список всех маршрутов:" << endl;
+	if (list.isEmpty()) {
+		cout << "Список маршрутов пуст" << endl;
+	} else {
+		cout << "Список всех маршрутов:\n";
 		list.print();
 	}
 	backToMenu();
 }
 
 void changeRoute(RouteList& list) {
-	int numOfRoute = inputInt("Введите номер маршрута, который хотите изменить: ", 1);
+	int routeNum = inputInt(CHANGE_INPUT_NUM_STR, 1);
 
-	if (!list.isRouteInList(numOfRoute)) {
-		cout << "Маршрут с таким номером не существует" << endl;
+	if (!list.isRouteInList(routeNum)) {
+		cout << CHANGE_NOT_EXIST_STR;
+		backToMenu();
+
 	} else {
-		int choice;
+		int userChoice;
+
 		while (true) {
-			choice = changeMenuChoice(numOfRoute, list);
+			userChoice = inputInt(CHANGE_HEADER_STR + list.findByNum(routeNum).str()
+				+ CHANGE_MENU_STR, 0, CHANGE_MENU_ITEMS_COUNT);
 
-			if (choice == 1) {
-				int newNumOfRoute = inputInt("Введите новый номер маршрута: ");
+			if (userChoice == 1) {
+				int newRouteNum = inputInt(CHANGE_NEW_NUM_STR, 1);
 
-				if (list.isRouteInList(newNumOfRoute)) {
-					cout << "Маршрут с таким номером уже существует" << endl;
-					backToMenu();
+				if (list.isRouteInList(newRouteNum)) {
+					cout << CHANGE_ALREADY_EXIST_STR;
+
 				} else {
-					list.changeNumber(numOfRoute, newNumOfRoute);
+					list.changeRouteNumber(routeNum, newRouteNum);
 
-					cout << "Номер маршрута изменён с " << numOfRoute << " на " << newNumOfRoute << endl;
-					cout << list.findByNum(newNumOfRoute);
+					cout << CHANGE_SUCCESS;
+					cout << list.findByNum(newRouteNum);
 
-					numOfRoute = newNumOfRoute;
+					routeNum = newRouteNum;
 
-					backToMenu();
 				}
-			} else if (choice == 2) {
-				string new_start = inputString("Введите новый начальный пункт: ");
+			} else if (userChoice == 2) {
+				string newStart = inputString(CHANGE_INPUT_START_STR);
 
-				list.changeStart(numOfRoute, new_start);
+				list.changeRouteStart(routeNum, newStart);
 
-				cout << "Изменения внесены:" << endl;
-				cout << list.findByNum(numOfRoute);
+				cout << CHANGE_SUCCESS;
+				cout << list.findByNum(routeNum);
 
-				backToMenu();
-			} else if (choice == 3) {
-				string new_end = inputString("Введите новый конечный пункт: ");
+			} else if (userChoice == 3) {
+				string newEnd = inputString(CHANGE_INPUT_END_STR);
 
-				list.changeEnd(numOfRoute, new_end);
+				list.changeRouteEnd(routeNum, newEnd);
 
-				cout << "Изменения внесены:" << endl;
-				cout << list.findByNum(numOfRoute);
+				cout << CHANGE_SUCCESS;
+				cout << list.findByNum(routeNum);
 
-				backToMenu();
-			} else if (choice == 4) {
+
+			} else if (userChoice == 0) {
 				return;
 			}
+
+			backToMenu();
 		}
 	}
-	backToMenu();
 }
 
 void sortRouteList(RouteList& list) {
 	system("cls");
-	if (list.isEmpty()) { cout << "Список маршрутов пуст" << endl; } else {
-		if (list.size() > 5000) {
-			cout << "Объем данных слишком большой. Сортировка может занять длительное время." << endl;
-			cout << "НЕ рекомендуется делать сортировку с таким объёмом данных." << endl;
-			cout << "Если вы желаете продолжить нажмите 0\n\nЛюбая другая клавиша отменит действие . . . ";
-			char ch = _getch();
-			if (ch != '0') { return; }
-			system("cls");
-			cout << "Начат процесс сортировки. Ожидайте." << endl;
-		}
-		list.sort();
-		cout << "Список маршрутов отсортирован:" << endl;
-		list.print();
-	}
+
 	backToMenu();
 }
 

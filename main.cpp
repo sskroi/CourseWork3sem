@@ -24,7 +24,7 @@ void mainLoop(RouteList& list) {
         }
 
         else if (choice == 3) {
-            menu::addInRouteList(list);
+            menu::addRoute(list);
         }
 
         else if (choice == 4) {
@@ -39,16 +39,11 @@ void mainLoop(RouteList& list) {
             menu::sortRouteList(list);
         }
 
-        else if (choice == 7) {
-            list.writeInFile(DB_FILENAME);
-            system("cls");
-            cout << "База данных сохранена" << endl;
-            menu::backToMenu();
-        }
-
         else if (choice == 0) {
             return;
         }
+
+        list.writeInFile(DB_FILENAME);
     }
 }
 

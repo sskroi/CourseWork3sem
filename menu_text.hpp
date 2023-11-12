@@ -3,10 +3,10 @@
 using namespace std;
 namespace menu {
 
-const string INPUT_STR = "Выберите дейсвтие: ";
+const string INPUT_STR = "Выберите дейсвтие -> ";
 const string INCORRECT_INPUT_STR = "Некорректный ввод: ";
 
-const string MENU_STR =
+const string MAIN_MENU_STR =
 "««« ГЛАВНОЕ МЕНЮ »»»\n"
 "1) Посмотреть список всех маршрутов\n"
 "2) Найти маршрут\n"
@@ -14,9 +14,8 @@ const string MENU_STR =
 "4) Удалить маршрут\n"
 "5) Изменить маршрут\n"
 "6) Отсортировать маршруты по номеру\n"
-"7) Сохранить БД\n"
 "0) Выход\n\n" + INPUT_STR;
-const int MENU_ITEMS_COUNT = 7;
+const int MAIN_MENU_ITEMS_COUNT = 6;
 
 const string REPEAT_INPUT_STR = "Нажмите любую клавишу для повторного ввода . . . ";
 
@@ -47,13 +46,21 @@ const string FINDING_END_STR = "Введите конечный пункт ма�
 const string FINDING_RESULT_STR = "-> Результаты поиска:\n";
 const string FINDING_NO_RESULT_STR = "По вашему запросу ничего не найдено\n";
 
-
-const string ROUTE_CHANGE_MENU_STR =
+// change
+const string CHANGE_HEADER_STR = "[Изменение] ";
+const string CHANGE_MENU_STR =
 "1) Изменить номер\n"
 "2) Изменить начальный пункт\n"
 "3) Изменить конечный пункт\n"
 "0) Вернуться в главное меню\n\n" + INPUT_STR;
-const int ROUTE_CHANGE_MENU_ITEMS_COUNT = 3;
+const int CHANGE_MENU_ITEMS_COUNT = 3;
+const string CHANGE_INPUT_NUM_STR = "Введите номер маршрута, который хотите изменить: ";
+const string CHANGE_NOT_EXIST_STR = "\nМаршрута с таким номером не существует\n";
+const string CHANGE_NEW_NUM_STR = "Введите новый номер маршрута: ";
+const string CHANGE_ALREADY_EXIST_STR = "\nОшибка: маршрут с таким номером уже существует\n";
+const string CHANGE_SUCCESS = "\nИзменения успешно внесены:\n";
+const string CHANGE_INPUT_START_STR = "Введите новый начальный пункт: ";
+const string CHANGE_INPUT_END_STR = "Введите новый конечный пункт: ";
 
 string incorrectIntInputStr(int l, int r) {
     stringstream stream;

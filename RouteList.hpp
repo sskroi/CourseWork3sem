@@ -184,28 +184,22 @@ public:
 		return result;
 	}
 
-	void changeNumber(int old_num, int new_num) {
-		Route* cur = this->head;
-		while (cur->number != old_num) {
-			cur = cur->next;
-		}
-		cur->number = new_num;
+	void changeRouteNumber(int oldRouteNum, int newRouteNum) {
+		try {
+			this->findByNum(oldRouteNum).number = newRouteNum;
+		} catch (RouteNotExistErr& ex) {}
 	}
 
-	void changeStart(int num, const string& new_start) {
-		Route* cur = this->head;
-		while (cur->number != num) {
-			cur = cur->next;
-		}
-		cur->start = new_start;
+	void changeRouteStart(int routeNum, const string newRouteStart) {
+		try {
+			this->findByNum(routeNum).start = newRouteStart;
+		} catch (RouteNotExistErr& ex) {}
 	}
 
-	void changeEnd(int num, const string& new_end) {
-		Route* cur = this->head;
-		while (cur->number != num) {
-			cur = cur->next;
-		}
-		cur->end = new_end;
+	void changeRouteEnd(int routeNum, const string newRouteEnd) {
+		try {
+			this->findByNum(routeNum).end = newRouteEnd;
+		} catch (RouteNotExistErr& ex) {}
 	}
 
 	size_t size() { return this->_size; }

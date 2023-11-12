@@ -267,7 +267,7 @@ public:
 		return len;
 	}
 
-	void readFromFile(const string name) {
+	void readFromFile(const string& name) {
 		ifstream file(name, ios::in);
 
 		if (!file.is_open()) { return; }

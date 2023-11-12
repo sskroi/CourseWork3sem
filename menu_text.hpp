@@ -36,9 +36,10 @@ const string DELETING_SUCCESS = "\nМаршрут успешно удалён\n"
 
 // finding
 const string ROUTE_FIND_MENU_STR =
-"1) Найти по номеру\n"
-"2) Найти по пункту отправлению\n"
-"3) Найти по пункту прибытия\n"
+"«« Поиск »»\n"
+"1) По номеру\n"
+"2) По пункту отправления\n"
+"3) По пункту прибытия\n"
 "0) Вернуться в главное меню\n\n" + INPUT_STR;
 const int ROUTE_FIND_MENU_ITEMS_COUNT_STR = 3;
 const string FINDING_NUM_STR = "Введите номер маршрута, который хотите найти: ";

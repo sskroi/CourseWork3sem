@@ -20,11 +20,11 @@ void mainLoop(RouteList& list) {
         }
 
         else if (choice == 2) {
-            menu::addInRouteListFromKeyBoard(list);
+            menu::findRoute(list);
         }
 
         else if (choice == 3) {
-            menu::changeRoute(list);
+            menu::addInRouteListFromKeyBoard(list);
         }
 
         else if (choice == 4) {
@@ -32,7 +32,7 @@ void mainLoop(RouteList& list) {
         }
 
         else if (choice == 5) {
-            menu::findRouteByNumberFromKeyboard(list);
+            menu::changeRoute(list);
         }
 
         else if (choice == 6) {

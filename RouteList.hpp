@@ -22,7 +22,7 @@ public:
 		number(number), start(a), end(b), next(nullptr), prev(nullptr) {}
 
 	Route(const Route& r) :
-		number(r.number), start(r.start), end(r.end), next(r.next), prev(r.prev) {}
+		number(r.number), start(r.start), end(r.end), next(nullptr), prev(nullptr) {}
 
 	string str() {
 		return format("Номер: {:<3} | {} -> {}\n", this->number, this->start, this->end);
@@ -43,12 +43,23 @@ private:
 	Route* head = nullptr;
 	size_t _size = 0;
 
+	void clear() {
+		if (this->head != nullptr) {
+			Route* cur = this->head;
+			Route* temp;
+
+			while (cur != nullptr) {
+				temp = cur;
+				cur = cur->next;
+				delete temp;
+			}
+			this->head = nullptr;
+			this->_size = 0;
+		}
+	}
+
 public:
 	RouteList() {}
-
-	RouteList(Route& route) {
-		this->append(route);
-	}
 
 	RouteList(const RouteList& other) {
 		Route* cur = other.head;
@@ -58,6 +69,19 @@ public:
 
 			cur = cur->next;
 		}
+	}
+
+	RouteList operator=(const RouteList& other) {
+		this->clear();
+
+		Route* cur = other.head;
+		while (cur != nullptr) {
+			this->append(*cur);
+
+			cur = cur->next;
+		}
+
+		return *this;
 	}
 
 	void append(const Route& route) {
@@ -115,6 +139,49 @@ public:
 			cur = cur->next;
 		}
 		return false;
+	}
+
+	Route& findByNum(int numOfRoute) {
+		Route* cur = this->head;
+
+		while (cur != nullptr) {
+			if (cur->number == numOfRoute) {
+				return *cur;
+			}
+			cur = cur->next;
+		}
+
+		throw RouteNotExistErr("the route with this number is not in the list");
+	}
+
+	RouteList findByStart(const string start) {
+		RouteList result;
+
+		Route* cur = this->head;
+
+		while (cur != nullptr) {
+			if (cur->start == start) {
+				result.append(*cur);
+			}
+			cur = cur->next;
+		}
+
+		return result;
+	}
+
+	RouteList findByEnd(const string end) {
+		RouteList result;
+
+		Route* cur = this->head;
+
+		while (cur != nullptr) {
+			if (cur->end == end) {
+				result.append(*cur);
+			}
+			cur = cur->next;
+		}
+
+		return result;
 	}
 
 	void changeNumber(int old_num, int new_num) {
@@ -178,19 +245,6 @@ public:
 		}
 	}
 
-	Route& findByNum(int numOfRoute) {
-		Route* cur = this->head;
-
-		while (cur != nullptr) {
-			if (cur->number == numOfRoute) {
-				return *cur;
-			}
-			cur = cur->next;
-		}
-
-		throw RouteNotExistErr("the route with this number is not in the list");
-	}
-
 	void readFromFile(const string name) {
 		ifstream file(name, ios::in);
 
@@ -233,15 +287,6 @@ public:
 	}
 
 	~RouteList() {
-		if (this->head != nullptr) {
-			Route* cur = this->head;
-			Route* temp;
-			while (cur != nullptr) {
-				temp = cur;
-				cur = cur->next;
-				delete temp;
-			}
-			this->head = nullptr;
-		}
+		this->clear();
 	}
 };

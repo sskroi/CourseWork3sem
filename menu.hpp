@@ -63,16 +63,56 @@ int mainMenuChoice() {
 	return choice;
 }
 
+void backToMenu() {
+	cout << endl << "Нажмите любую клавишу чтобы вернуться в меню . . . ";
+	system("pause > nul");
+}
+
+void findRoute(RouteList& list) {
+	int userChoice;
+
+	while (true) {
+		userChoice = inputInt(ROUTE_FIND_MENU_STR, 0, ROUTE_FIND_MENU_ITEMS_COUNT_STR);
+
+		RouteList result;
+
+		if (userChoice == 1) {
+			int routeNumber = inputInt(FINDING_NUM_STR, 1);
+
+			try {
+				result.append(list.findByNum(routeNumber));
+			} catch (RouteNotExistErr& ex) {}
+
+		} else if (userChoice == 2) {
+			string routeStart = inputString(FINDING_START_STR);
+
+			result = list.findByStart(routeStart);
+
+		} else if (userChoice == 3) {
+			string routeEnd = inputString(FINDING_END_STR);
+
+			result = list.findByEnd(routeEnd);
+
+		} else if (userChoice == 0) {
+			return;
+		}
+
+		cout << FINDING_RESULT_STR;
+		if (result.isEmpty()) {
+			cout << FINDING_NO_RESULT_STR;
+		} else {
+			result.print();
+		}
+
+		backToMenu();
+	}
+}
+
 int changeMenuChoice(int numOfRoute, RouteList& list) {
 	system("cls");
 	string header = "Изменение - " + list.findByNum(numOfRoute).str();
 	int choice = inputInt(header + ROUTE_CHANGE_MENU_STR, 1, 4);
 	return choice;
-}
-
-void backToMenu() {
-	cout << endl << "Нажмите любую клавишу чтобы вернуться в меню . . . ";
-	system("pause > nul");
 }
 
 void addInRouteListFromKeyBoard(RouteList& list) {

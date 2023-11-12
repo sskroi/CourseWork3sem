@@ -9,10 +9,10 @@ const string INCORRECT_INPUT_STR = "Некорректный ввод: ";
 const string MENU_STR =
 "««« ГЛАВНОЕ МЕНЮ »»»\n"
 "1) Посмотреть список всех маршрутов\n"
-"2) Добавить маршрут\n"
-"3) Изменить маршрут\n"
+"2) Найти маршрут\n"
+"3) Добавить маршрут\n"
 "4) Удалить маршрут\n"
-"5) Найти маршрут\n"
+"5) Изменить маршрут\n"
 "6) Отсортировать маршруты по номеру\n"
 "7) Сохранить БД\n"
 "0) Выход\n\n" + INPUT_STR;
@@ -39,8 +39,8 @@ const int ROUTE_FIND_MENU_ITEMS_COUNT_STR = 3;
 const string FINDING_NUM_STR = "Введите номер маршрута, который хотите найти: ";
 const string FINDING_START_STR = "Введите стартовый пункт маршрута, который хотите найти: ";
 const string FINDING_END_STR = "Введите конечный пункт маршрута, который хотите найти: ";
-const string FINDING_RESULT_STR = "Результаты поиска:\n";
-const string FINDING_NO_RESULT_STR = "По вашему запросу ничего не найдено";
+const string FINDING_RESULT_STR = "-> Результаты поиска:\n";
+const string FINDING_NO_RESULT_STR = "По вашему запросу ничего не найдено\n";
 
 
 const string ROUTE_CHANGE_MENU_STR =

@@ -150,8 +150,16 @@ void printRouteList(RouteList& list) {
 	if (list.isEmpty()) {
 		cout << "Список маршрутов пуст" << endl;
 	} else {
-		cout << "Список всех маршрутов:\n";
-		list.print();
+		int maxNumLen = list.maxNumLen();
+
+		if (maxNumLen > 5) {
+			maxNumLen -= 5;
+		} else {
+			maxNumLen = 0;
+		}
+
+		cout << setw(10 + maxNumLen) << "Номер" << " | " << "Откуда -> Куда" << endl;
+		list.print(5 + maxNumLen);
 	}
 	backToMenu();
 }

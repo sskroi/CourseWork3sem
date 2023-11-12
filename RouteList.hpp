@@ -62,6 +62,18 @@ private:
 			this->_size = 0;
 		}
 	}
+	int maxRouteNum() {
+		Route* cur = this->head;
+		int maxNum = 0;
+
+		while (cur != nullptr) {
+			if (cur->number > maxNum) {
+				maxNum = cur->number;
+			}
+			cur = cur->next;
+		}
+		return maxNum;
+	}
 
 public:
 	RouteList() {}
@@ -242,6 +254,17 @@ public:
 				cur = cur->next;
 			}
 		}
+	}
+
+	int maxNumLen() {
+		int maxNum = this->maxRouteNum();
+		int len = 0;
+
+		while (maxNum > 0) {
+			maxNum /= 10;
+			len++;
+		}
+		return len;
 	}
 
 	void readFromFile(const string name) {

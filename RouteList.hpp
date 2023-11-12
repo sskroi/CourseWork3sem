@@ -209,10 +209,10 @@ public:
 
 	size_t size() { return this->_size; }
 
-	void print() {
+	void print(int numberIndent = 0) {
 		Route* cur = this->head;
 		while (cur != nullptr) {
-			cout << cur->str();
+			cout << cur->str(numberIndent);
 			cur = cur->next;
 		}
 	}

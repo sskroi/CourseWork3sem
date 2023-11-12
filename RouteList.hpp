@@ -2,8 +2,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 #include <iomanip>
-#include <format>
 using namespace std;
 
 class RouteList;
@@ -24,8 +24,13 @@ public:
 	Route(const Route& r) :
 		number(r.number), start(r.start), end(r.end), next(nullptr), prev(nullptr) {}
 
-	string str() {
-		return format("Номер: {:<3} | {} -> {}\n", this->number, this->start, this->end);
+	string str(int numberIndent = 0) {
+		stringstream s;
+
+		s << setw(numberIndent) << this->number
+			<< " | " << this->start << " -> " << this->end << endl;
+
+		return s.str();
 	}
 };
 ostream& operator<<(ostream& os, Route& route) {

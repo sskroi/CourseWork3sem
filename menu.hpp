@@ -115,7 +115,7 @@ int changeMenuChoice(int numOfRoute, RouteList& list) {
 	return choice;
 }
 
-void addInRouteListFromKeyBoard(RouteList& list) {
+void addInRouteList(RouteList& list) {
 	int newRouteNum;
 
 	while (true) {
@@ -139,15 +139,22 @@ void addInRouteListFromKeyBoard(RouteList& list) {
 	backToMenu();
 }
 
-void findRouteByNumberFromKeyboard(RouteList& list) {
-	int n = inputInt("Введите номер маршрута, который хотите найти", 1);
-	list.findByNum(n);
+void deleteRoute(RouteList& list) {
+	int numOfRoute = inputInt(DELETING_NUM_STR, 1);
+
+	if (!list.isRouteInList(numOfRoute)) {
+		cout << DELETING_NOT_EXIST_STR;
+	} else {
+		list.deleteByNum(numOfRoute);
+		cout << DELETING_SUCCESS;
+	}
+
 	backToMenu();
 }
 
-void deleteByNumberFromKeyboard(RouteList& list) {
-	int n = inputInt("Введите номер маршрута, который хотите удалить", 1);
-	list.deleteByNum(n);
+void findRouteByNumberFromKeyboard(RouteList& list) {
+	int n = inputInt("Введите номер маршрута, который хотите найти", 1);
+	list.findByNum(n);
 	backToMenu();
 }
 

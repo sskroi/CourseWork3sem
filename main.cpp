@@ -24,11 +24,11 @@ void mainLoop(RouteList& list) {
         }
 
         else if (choice == 3) {
-            menu::addInRouteListFromKeyBoard(list);
+            menu::addInRouteList(list);
         }
 
         else if (choice == 4) {
-            menu::deleteByNumberFromKeyboard(list);
+            menu::deleteRoute(list);
         }
 
         else if (choice == 5) {

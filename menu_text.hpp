@@ -24,10 +24,15 @@ const string EMPTY_STRING_STR = "\n" + INCORRECT_INPUT_STR + "вы ввели п
 
 // adding
 const string ADDING_ROUTE_NUM_STR = "Введите номер добавляемого маршрута: ";
-const string ADDING_ALREADY_EXIST_STR = "Ошибка: маршрут с таким номером уже существует\n";
+const string ADDING_ALREADY_EXIST_STR = "\nОшибка: маршрут с таким номером уже существует\n";
 const string ADDING_START_STR = "Введите начальный пункт маршрута: ";
 const string ADDING_END_STR = "Введите конечный пункт маршрута: ";
 const string ADDING_SUCCESS_STR = "Маршрут успешно добавлен:\n\n";
+
+// deleting
+const string DELETING_NUM_STR = "Введите номер маршрута, который хотите удалить: ";
+const string DELETING_NOT_EXIST_STR = "\nМаршрута с таким номером не существует\n";
+const string DELETING_SUCCESS = "\nМаршрут успешно удалён\n";
 
 // finding
 const string ROUTE_FIND_MENU_STR =

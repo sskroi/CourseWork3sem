@@ -221,8 +221,8 @@ void changeRoute(RouteList& list) {
 
 void sortRouteList(RouteList& list) {
 	system("cls");
-
-	backToMenu();
+	cout << SORT_PROCESSING;
+	list.sort();
 }
 
 size_t countUTF8Chars(const std::string& str) {

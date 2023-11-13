@@ -24,11 +24,11 @@ public:
 	Route(const Route& r) :
 		number(r.number), start(r.start), end(r.end), next(nullptr), prev(nullptr) {}
 
-	string str(int numberIndent = 0) {
+	string str(int numberIndent = 0, bool endline = true) {
 		stringstream s;
 
-		s << setw(numberIndent) << this->number
-			<< " | " << this->start << " -> " << this->end << endl;
+		s << setw(numberIndent) << this->number << " | " << this->start << " -> " << this->end;
+		if (endline) s << endl;
 
 		return s.str();
 	}
@@ -73,6 +73,23 @@ private:
 			cur = cur->next;
 		}
 		return maxNum;
+	}
+	static void swapRoutes(Route& a, Route& b) {
+		int tempNum;
+		string tempStart;
+		string tempEnd;
+
+		tempNum = a.number;
+		tempStart = a.start;
+		tempEnd = a.end;
+
+		a.number = b.number;
+		a.start = b.start;
+		a.end = b.end;
+
+		b.number = tempNum;
+		b.start = tempStart;
+		b.end = tempEnd;
 	}
 
 public:
@@ -232,24 +249,13 @@ public:
 	void sort() {
 		if (_size < 2) { return; }
 		Route* cur;
-		Route* next;
-		int tempN;
-		string tempStart;
-		string tempEnd;
+
 		for (size_t i = 0; i < (this->_size - 1); i++) {
 			cur = this->head;
+
 			for (size_t j = 0; j < (this->_size - i - 1); j++) {
 				if (cur->number > cur->next->number) {
-					next = cur->next;
-					tempN = cur->number;
-					tempStart = cur->start;
-					tempEnd = cur->end;
-					cur->number = next->number;
-					cur->start = next->start;
-					cur->end = next->end;
-					next->number = tempN;
-					next->start = tempStart;
-					next->end = tempEnd;
+					swapRoutes(*cur, *(cur->next));
 				}
 				cur = cur->next;
 			}

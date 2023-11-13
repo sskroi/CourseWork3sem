@@ -49,7 +49,7 @@ const string FINDING_RESULT_STR = "-> Результаты поиска:\n";
 const string FINDING_NO_RESULT_STR = "По вашему запросу ничего не найдено\n";
 
 // change
-const string CHANGE_HEADER_STR = "[Изменение] ";
+const string CHANGE_HEADER_STR = "";
 const string CHANGE_MENU_STR =
 "1) Изменить номер\n"
 "2) Изменить начальный пункт\n"
@@ -64,6 +64,8 @@ const string CHANGE_SUCCESS = "\nИзменения успешно внесен�
 const string CHANGE_INPUT_START_STR = "Введите новый начальный пункт: ";
 const string CHANGE_INPUT_END_STR = "Введите новый конечный пункт: ";
 
+const string SORT_PROCESSING = "Сортировка начата . . . \n";
+
 string incorrectIntInputStr(int l, int r) {
     stringstream stream;
 
@@ -77,7 +79,7 @@ string incorrectInputStringLenStr(size_t maxLen) {
     stringstream stream;
 
     stream << endl << INCORRECT_INPUT_STR;
-    stream << "максимальная длина строки = " << maxLen << endl;
+    stream << "максимальная длина строки = " << maxLen << " символов" << endl;
 
     return stream.str();
 }

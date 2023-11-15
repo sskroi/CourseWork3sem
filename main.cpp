@@ -4,7 +4,7 @@
 using namespace std;
 
 // название файла с БД
-const string DB_FILENAME = "data.txt";
+const string DB_FILENAME = "route_list_data.txt";
 
 void mainLoop(RouteList& list) {
     // переменная с выбором пользователя
@@ -53,7 +53,14 @@ int main() {
     RouteList list;
 
     // чтение БД
-    list.readFromFile(DB_FILENAME);
+    if (!list.readFromFile(DB_FILENAME)) {
+        cout << "!!! Файл с базой данных - \"" << DB_FILENAME << "\"\n";
+        cout << "НЕ обнаружен в директории программы\n";
+        cout << "Будет создан пустой файл с БД\n\n";
+        cout << "Нажмите любую клавишу чтобы перейти в главное меню . . . ";
+        system("pause > nul");
+        list.writeInFile(DB_FILENAME);
+    };
 
     // запуска основного цикла программы
     mainLoop(list);

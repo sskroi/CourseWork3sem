@@ -48,50 +48,6 @@ private:
 	Route* head = nullptr;
 	size_t _size = 0;
 
-	void clear() {
-		if (this->head != nullptr) {
-			Route* cur = this->head;
-			Route* temp;
-
-			while (cur != nullptr) {
-				temp = cur;
-				cur = cur->next;
-				delete temp;
-			}
-			this->head = nullptr;
-			this->_size = 0;
-		}
-	}
-	int maxRouteNum() {
-		Route* cur = this->head;
-		int maxNum = 0;
-
-		while (cur != nullptr) {
-			if (cur->number > maxNum) {
-				maxNum = cur->number;
-			}
-			cur = cur->next;
-		}
-		return maxNum;
-	}
-	static void swapRoutes(Route& a, Route& b) {
-		int tempNum;
-		string tempStart;
-		string tempEnd;
-
-		tempNum = a.number;
-		tempStart = a.start;
-		tempEnd = a.end;
-
-		a.number = b.number;
-		a.start = b.start;
-		a.end = b.end;
-
-		b.number = tempNum;
-		b.start = tempStart;
-		b.end = tempEnd;
-	}
-
 public:
 	RouteList() {}
 
@@ -273,10 +229,12 @@ public:
 		return len;
 	}
 
-	void readFromFile(const string& name) {
+	bool readFromFile(const string& name) {
 		ifstream file(name, ios::in);
 
-		if (!file.is_open()) { return; }
+		if (!file.is_open()) {
+			return false;
+		}
 
 		size_t listSize;
 
@@ -292,6 +250,8 @@ public:
 			this->append(Route(routeNum, routeStart, routeEnd));
 		}
 		file.close();
+
+		return true;
 	}
 
 	void writeInFile(const string& name) {
@@ -316,5 +276,52 @@ public:
 
 	~RouteList() {
 		this->clear();
+	}
+
+private:
+	void clear() {
+		if (this->head != nullptr) {
+			Route* cur = this->head;
+			Route* temp;
+
+			while (cur != nullptr) {
+				temp = cur;
+				cur = cur->next;
+				delete temp;
+			}
+			this->head = nullptr;
+			this->_size = 0;
+		}
+	}
+
+	int maxRouteNum() {
+		Route* cur = this->head;
+		int maxNum = 0;
+
+		while (cur != nullptr) {
+			if (cur->number > maxNum) {
+				maxNum = cur->number;
+			}
+			cur = cur->next;
+		}
+		return maxNum;
+	}
+
+	static void swapRoutes(Route& a, Route& b) {
+		int tempNum;
+		string tempStart;
+		string tempEnd;
+
+		tempNum = a.number;
+		tempStart = a.start;
+		tempEnd = a.end;
+
+		a.number = b.number;
+		a.start = b.start;
+		a.end = b.end;
+
+		b.number = tempNum;
+		b.start = tempStart;
+		b.end = tempEnd;
 	}
 };

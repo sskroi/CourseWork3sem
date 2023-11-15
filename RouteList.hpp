@@ -18,8 +18,8 @@ private:
 	friend RouteList;
 
 public:
-	Route(int number, const string& a, const string& b) :
-		number(number), start(a), end(b), next(nullptr), prev(nullptr) {}
+	Route(int number, const string& start, const string& end) :
+		number(number), start(start), end(end), next(nullptr), prev(nullptr) {}
 
 	Route(const Route& r) :
 		number(r.number), start(r.start), end(r.end), next(nullptr), prev(nullptr) {}

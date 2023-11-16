@@ -3,11 +3,24 @@
 #include <sstream>
 #include <string>
 #include <fstream>
+#include <algorithm>
 #include "RouteList.hpp"
 #include "menu_text.hpp"
 using namespace std;
 
 namespace menu {
+
+void stripString(string& s) {
+	// Удаление пробельных символов слева
+	s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
+		return !std::isspace(ch);
+		}));
+
+	// Удаление пробельных символов справа
+	s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
+		return !std::isspace(ch);
+		}).base(), s.end());
+}
 
 // фунуция для ввода целого числа в диапазоне [l;r]
 int inputInt(const string& text, int l = INT_MIN, int r = INT_MAX) {
@@ -19,6 +32,7 @@ int inputInt(const string& text, int l = INT_MIN, int r = INT_MAX) {
 		cout << text;
 
 		getline(cin, input);
+		stripString(input);
 		stringstream stream(input);
 
 		if ((stream >> number && stream.eof()) && (number >= l && number <= r)) {
@@ -41,6 +55,7 @@ string inputString(const string& text, size_t maxLen = 100ULL) {
 		cout << text;
 
 		getline(cin, input);
+		stripString(input);
 
 		if (input.size() > 0 && countUTF8Chars(input) <= maxLen) {
 			return input;

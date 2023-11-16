@@ -4,7 +4,7 @@
 using namespace std;
 namespace menu {
 
-const string INPUT_STR = "Выберите дейсвтие -> ";
+const string INPUT_STR = "Выберите дейсвтие >> ";
 const string INCORRECT_INPUT_STR = "Некорректный ввод: ";
 
 const string MAIN_MENU_STR =

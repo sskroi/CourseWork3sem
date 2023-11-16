@@ -144,13 +144,13 @@ public:
 		throw RouteNotExistErr("the route with this number is not in the list");
 	}
 
-	RouteList findByStart(const string start) {
+	RouteList findByStart(const string searchStart) {
 		RouteList result;
 
 		Route* cur = this->head;
 
 		while (cur != nullptr) {
-			if (cur->start == start) {
+			if (cur->start.find(searchStart) != std::string::npos) {
 				result.append(*cur);
 			}
 			cur = cur->next;
@@ -159,13 +159,13 @@ public:
 		return result;
 	}
 
-	RouteList findByEnd(const string end) {
+	RouteList findByEnd(const string searchEnd) {
 		RouteList result;
 
 		Route* cur = this->head;
 
 		while (cur != nullptr) {
-			if (cur->end == end) {
+			if (cur->end.find(searchEnd) != std::string::npos) {
 				result.append(*cur);
 			}
 			cur = cur->next;

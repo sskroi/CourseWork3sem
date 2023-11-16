@@ -1,10 +1,10 @@
 #include <string>
-#include "RouteList.hpp"
-#include "menu.hpp"
-using namespace std;
+#include <iostream>
+#include "RouteList.h"
+#include "menu.h"
 
 // название файла с БД
-const string DB_FILENAME = "route_list_data.txt";
+const std::string DB_FILENAME = "db/route_list_data.txt";
 
 void mainLoop(RouteList& list) {
     // переменная с выбором пользователя
@@ -54,10 +54,10 @@ int main() {
 
     // чтение БД
     if (!list.readFromFile(DB_FILENAME)) {
-        cout << "!!! Файл с базой данных - \"" << DB_FILENAME << "\"\n";
-        cout << "НЕ обнаружен в директории программы\n";
-        cout << "Будет создан пустой файл с БД\n\n";
-        cout << "Нажмите любую клавишу чтобы перейти в главное меню . . . ";
+        std::cout << "!!! Файл с базой данных - \"" << DB_FILENAME << "\"\n";
+        std::cout << "НЕ обнаружен в директории программы\n";
+        std::cout << "Будет создан пустой файл с БД\n\n";
+        std::cout << "Нажмите любую клавишу чтобы перейти в главное меню . . . ";
         system("pause > nul");
         list.writeInFile(DB_FILENAME);
     };
@@ -67,4 +67,6 @@ int main() {
 
     // сохранение в базу данных перед завершение программы
     list.writeInFile(DB_FILENAME);
+
+    return 0;
 }

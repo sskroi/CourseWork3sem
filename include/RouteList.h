@@ -1,40 +1,10 @@
 #pragma once
 #include <string>
 #include <stdexcept>
-using namespace std;
 
-class RouteList;
-
-class Route {
-private:
-	int number;
-	string start;
-	string end;
-	Route* next;
-	Route* prev;
-	friend RouteList;
-
-public:
-	Route(int number, const string& start, const string& end);
-
-	Route(const Route& r);
-
-	string str(int numberIndent = 0, bool endline = true);
-};
-ostream& operator<<(ostream& os, Route& route);
-
-
-class RouteNotExistErr : public std::range_error {
-public:
-	RouteNotExistErr(const string& msg);
-};
-
+#include "Route.h"
 
 class RouteList {
-private:
-	Route* head = nullptr;
-	size_t _size = 0;
-
 public:
 	RouteList();
 
@@ -50,15 +20,15 @@ public:
 
 	Route& findByNum(int numOfRoute);
 
-	RouteList findByStart(const string searchStart);
+	RouteList findByStart(const std::string searchStart);
 
-	RouteList findByEnd(const string searchEnd);
+	RouteList findByEnd(const std::string searchEnd);
 
 	void changeRouteNumber(int oldRouteNum, int newRouteNum);
 
-	void changeRouteStart(int routeNum, const string newRouteStart);
+	void changeRouteStart(int routeNum, const std::string newRouteStart);
 
-	void changeRouteEnd(int routeNum, const string newRouteEnd);
+	void changeRouteEnd(int routeNum, const std::string newRouteEnd);
 
 	size_t size();
 
@@ -68,15 +38,23 @@ public:
 
 	int maxNumLen();
 
-	bool readFromFile(const string& name);
+	bool readFromFile(const std::string& name);
 
-	void writeInFile(const string& name);
+	void writeInFile(const std::string& name);
 
 	bool isEmpty();
+
+	class RouteNotExistErr : public std::range_error {
+	public:
+		RouteNotExistErr(const std::string& msg);
+	};
 
 	~RouteList();
 
 private:
+	Route* head = nullptr;
+	size_t _size = 0;
+
 	void clear();
 
 	int maxRouteNum();

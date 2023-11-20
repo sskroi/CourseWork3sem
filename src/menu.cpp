@@ -94,7 +94,7 @@ void findRoute(RouteList& list) {
 
             try {
                 result.append(list.findByNum(routeNumber));
-            } catch (RouteNotExistErr& ex) {}
+            } catch (RouteList::RouteNotExistErr& ex) {}
 
         } else if (userChoice == 2) {
             string routeStart = inputString(FINDING_START_STR);

@@ -4,10 +4,11 @@ project(CourseWork3sem VERSION 0.1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
-
 add_executable(CourseWork3sem
     src/main.cpp
     src/menu.cpp
     src/RouteList.cpp
+    src/Route.cpp
 )
+
+target_include_directories(CourseWork3sem PRIVATE ${CMAKE_SOURCE_DIR}/include)

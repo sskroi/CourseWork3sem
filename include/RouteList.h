@@ -2,7 +2,7 @@
 #include <string>
 #include <stdexcept>
 
-class Route;
+#include "Route.h"
 
 class RouteList {
 public:

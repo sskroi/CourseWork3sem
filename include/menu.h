@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-#include "RouteList.h"
+
+class RouteList;
 
 namespace menu {
 

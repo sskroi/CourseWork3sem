@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 #include <sstream>
+
 using namespace std;
+
 namespace menu {
 
 const string INPUT_STR = "Выберите дейсвтие >> ";

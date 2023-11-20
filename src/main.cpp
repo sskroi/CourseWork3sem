@@ -5,7 +5,7 @@
 #include "menu.h"
 
 // название файла с БД
-const std::string DB_FILENAME = "../db/route_list_data.txt";
+const std::string DB_FILENAME = "../db/route_list_data.bin";
 
 void mainLoop(RouteList& list) {
     // переменная с выбором пользователя

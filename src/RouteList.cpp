@@ -6,6 +6,7 @@
 
 #include "RouteList.h"
 
+
 using namespace std;
 
 RouteList::RouteNotExistErr::RouteNotExistErr(const string& msg)
@@ -192,45 +193,65 @@ int RouteList::maxNumLen() {
 	return len;
 }
 
-bool RouteList::readFromFile(const string& name) {
-	ifstream file(name, ios::in);
+bool RouteList::readFromFile(const string& fileName) {
+	ifstream ifile(fileName, ios::in | ios::binary);
 
-	if (!file.is_open()) {
+	if (!ifile.is_open()) {
 		return false;
 	}
 
 	size_t listSize;
+	ifile.read(reinterpret_cast<char*>(&listSize), sizeof(listSize));
 
-	int routeNum;
-	string routeStart;
-	string routeEnd;
+	int curNum;
+	size_t curStartBufSize;
+	char* curStartBuf;
+	size_t curEndBufSize;
+	char* curEndBuf;
 
-	file >> ws >> listSize;
 	for (size_t i = 0; i < listSize; i++) {
-		file >> ws >> routeNum;
-		getline(file >> ws, routeStart); // file >> ws обеспечивает удаление всех пробелов и символов новой строки из начала потока
-		getline(file >> ws, routeEnd);
-		this->append(Route(routeNum, routeStart, routeEnd));
-	}
-	file.close();
+		ifile.read(reinterpret_cast<char*>(&curNum), sizeof(curNum));
 
+		ifile.read(reinterpret_cast<char*>(&curStartBufSize), sizeof(curStartBufSize));
+		curStartBuf = new char[curStartBufSize];
+		ifile.read(curStartBuf, curStartBufSize);
+
+		ifile.read(reinterpret_cast<char*>(&curEndBufSize), sizeof(curEndBufSize));
+		curEndBuf = new char[curEndBufSize];
+		ifile.read(curEndBuf, curEndBufSize);
+
+		this->append(Route(curNum, string(curStartBuf), string(curEndBuf)));
+
+		delete[] curStartBuf;
+		delete[] curEndBuf;
+	}
+
+	ifile.close();
 	return true;
 }
 
-void RouteList::writeInFile(const string& name) {
-	ofstream file(name, ios::out);
+void RouteList::writeInFile(const string& fileName) {
+	ofstream oFile(fileName, ios::out | ios::binary);
 
-	file << this->_size << "\n";
+	oFile.write(reinterpret_cast<const char*>(&(this->_size)), sizeof(this->_size));
 
 	Route* cur = this->head;
-	for (size_t i = 0; i < this->_size; i++) {
-		file << cur->number << "\n";
-		file << cur->start << "\n";
-		file << cur->end << "\n";
+
+	while (cur != nullptr) {
+		oFile.write(reinterpret_cast<const char*>(&(cur->number)), sizeof(cur->number));
+
+		size_t startLen = cur->start.size() + 1;
+		oFile.write(reinterpret_cast<const char*>(&startLen), sizeof(startLen));
+		oFile.write(cur->start.c_str(), startLen);
+
+		size_t endLen = cur->end.size() + 1;
+		oFile.write(reinterpret_cast<const char*>(&endLen), sizeof(endLen));
+		oFile.write(cur->end.c_str(), endLen);
 
 		cur = cur->next;
 	}
-	file.close();
+
+	oFile.close();
 }
 
 bool RouteList::isEmpty() {

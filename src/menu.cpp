@@ -1,9 +1,9 @@
 #include <iostream>
-#include <sstream>
+#include <limits>
+#include <iomanip>
 #include <string>
 #include <fstream>
 #include <algorithm>
-#include <iomanip>
 
 #include "menu_text.hpp"
 #include "menu.h"
@@ -26,27 +26,26 @@ void stripString(string& s) {
 }
 
 // фунуция для ввода целого числа в диапазоне [l;r]
-int inputInt(const string& text, int l, int r) {
-    int number;
-    string input;
+int inputInt(const string& prompt, int l, int r) {
+    int inputNum;
 
     while (true) {
         system("cls");
-        cout << text;
+        cout << prompt;
+        cin >> inputNum;
 
-        getline(cin, input);
-        stripString(input);
-        stringstream stream(input);
-
-        if ((stream >> number && stream.eof()) && (number >= l && number <= r)) {
-            return number;
-        } else {
+        if (cin.fail() || cin.get() != '\n' || inputNum < l || inputNum > r) {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             cout << incorrectIntInputStr(l, r);
             cout << REPEAT_INPUT_STR;
             system("pause > nul");
+        } else {
+            return inputNum;
         }
     }
 }
+
 
 // функция для ввода строки с ограничением максимальной длины
 string inputString(const string& text, size_t maxLen) {

@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <sstream>
 
 using namespace std;
 
@@ -69,20 +68,21 @@ const string CHANGE_INPUT_END_STR = "Введите новый конечный 
 const string SORT_PROCESSING = "Сортировка начата . . . \n";
 
 string incorrectIntInputStr(int l, int r) {
-    stringstream stream;
+    string res;
 
-    stream << endl << INCORRECT_INPUT_STR;
-    stream << "введите целое число в диапазоне [" << l << "; " << r << "]" << endl;
+    res += "\n" + INCORRECT_INPUT_STR;
+    res += "введите целое число в диапазоне [" + to_string(l) + "; " + to_string(r) + "]\n";;
 
-    return stream.str();
+    return res;
 }
 
 string incorrectInputStringLenStr(size_t maxLen) {
-    stringstream stream;
+    string res;
 
-    stream << endl << INCORRECT_INPUT_STR;
-    stream << "максимальная длина строки = " << maxLen << " символов" << endl;
+    res += "\n" + INCORRECT_INPUT_STR;
+    res += "максимальная длина строки = " + to_string(maxLen) + " символов\n";
 
-    return stream.str();
+    return res;
 }
+
 }

@@ -6,7 +6,7 @@ class RouteList;
 namespace menu {
 
 // inputInt запрашивает у пользователя ввод целого числа в диапазоне [l;r]
-int inputInt(const std::string& text, int l = INT_MIN, int r = INT_MAX);
+int inputInt(const std::string& text, int l = -1'000'000, int r = 1'000'000);
 
 // inputString запрашивает у пользователя ввод строки с ограничением максимальной длины
 std::string inputString(const std::string& text, size_t maxLen = 100ULL);

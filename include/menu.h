@@ -6,14 +6,10 @@ class RouteList;
 namespace menu {
 
 // inputInt запрашивает у пользователя ввод целого числа в диапазоне [l;r]
-int inputInt(const std::string& text, int l = -1'000'000, int r = 1'000'000);
+int inputInt(std::string prompt, int l = -1'000'000, int r = 1'000'000);
 
 // inputString запрашивает у пользователя ввод строки с ограничением максимальной длины
 std::string inputString(const std::string& text, size_t maxLen = 100ULL);
-
-int mainMenuChoice();
-
-void backToMenu();
 
 void findRoute(RouteList& list);
 
@@ -32,5 +28,13 @@ void stripString(std::string& s);
 
 // countUTF8Chars подсчитывает количество utf-8 символов в строке
 size_t countUTF8Chars(const std::string& str);
+
+int mainMenuChoice();
+
+void backToMenu();
+
+void waitEnter();
+
+void clearConsole();
 
 }

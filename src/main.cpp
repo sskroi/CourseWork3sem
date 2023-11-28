@@ -58,8 +58,8 @@ int main() {
         std::cout << "!!! Файл с базой данных - \"" << DB_FILENAME << "\"\n";
         std::cout << "НЕ обнаружен в директории программы\n";
         std::cout << "Будет создан пустой файл с БД\n\n";
-        std::cout << "Нажмите любую клавишу чтобы перейти в главное меню . . . ";
-        system("pause > nul");
+        std::cout << "Нажмите Enter чтобы перейти в главное меню . . . ";
+        menu::waitEnter();
         list.writeInFile(DB_FILENAME);
     };
 

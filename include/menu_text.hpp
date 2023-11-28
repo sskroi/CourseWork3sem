@@ -7,6 +7,7 @@ namespace menu {
 
 const string INPUT_STR = "Выберите дейсвтие >> ";
 const string INCORRECT_INPUT_STR = "Некорректный ввод: ";
+const string BACK_TO_MENU_STR = "Нажмите Enter чтобы вернуться в меню . . . ";
 
 const string MAIN_MENU_STR =
 "««« ГЛАВНОЕ МЕНЮ »»»\n"
@@ -19,7 +20,7 @@ const string MAIN_MENU_STR =
 "0) Выход\n\n" + INPUT_STR;
 const int MAIN_MENU_ITEMS_COUNT = 6;
 
-const string REPEAT_INPUT_STR = "Нажмите любую клавишу для повторного ввода . . . ";
+const string REPEAT_INPUT_STR = "Нажмите Enter для повторного ввода . . . ";
 
 const string EMPTY_STRING_STR = "\n" + INCORRECT_INPUT_STR + "вы ввели пустую строку\n";
 

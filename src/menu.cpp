@@ -13,47 +13,43 @@ using namespace std;
 
 namespace menu {
 
-void stripString(string& s) {
-    // Удаление пробельных символов слева
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
-        return !std::isspace(ch);
-        }));
-
-    // Удаление пробельных символов справа
-    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
-        return !std::isspace(ch);
-        }).base(), s.end());
-}
-
 // фунуция для ввода целого числа в диапазоне [l;r]
-int inputInt(const string& prompt, int l, int r) {
+int inputInt(std::string prompt, int l, int r) {
     int inputNum;
+    char ch;
 
     while (true) {
-        system("cls");
-        cout << prompt;
-        cin >> inputNum;
+        std::cout << "\x1B[2J\x1B[H" << prompt;
 
-        if (cin.fail() || cin.get() != '\n' || inputNum < l || inputNum > r) {
-            cin.clear();
-            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            cout << incorrectIntInputStr(l, r);
-            cout << REPEAT_INPUT_STR;
-            system("pause > nul");
-        } else {
-            return inputNum;
+        if (std::cin.peek() != '\n') {
+            std::cin >> inputNum;
+
+            if (!std::cin.fail() && inputNum >= l && inputNum <= r) {
+                while (true) {
+                    ch = std::cin.get();
+                    if (ch == '\n') {
+                        return inputNum;
+                    } else if (ch != ' ') {
+                        break;
+                    }
+                }
+            }
         }
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "\nНекорректный ввод: введите целое число в диапазоне [" << l << "; " << r << "]\n";
+        std::cout << "Нажмите Enter для повторного ввода . . . ";
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }
 
-
 // функция для ввода строки с ограничением максимальной длины
-string inputString(const string& text, size_t maxLen) {
+string inputString(const string& prompt, size_t maxLen) {
     string input = "";
 
     while (true) {
-        system("cls");
-        cout << text;
+        clearConsole();
+        cout << prompt;
 
         getline(cin, input);
         stripString(input);
@@ -67,20 +63,9 @@ string inputString(const string& text, size_t maxLen) {
                 cout << incorrectInputStringLenStr(maxLen);
             }
             cout << REPEAT_INPUT_STR;
-            system("pause > nul");
+            waitEnter();
         }
     }
-}
-
-int mainMenuChoice() {
-    system("cls");
-    int choice = inputInt(MAIN_MENU_STR, 0, MAIN_MENU_ITEMS_COUNT);
-    return choice;
-}
-
-void backToMenu() {
-    cout << endl << "Нажмите любую клавишу чтобы вернуться в меню . . . ";
-    system("pause > nul");
 }
 
 void findRoute(RouteList& list) {
@@ -134,7 +119,7 @@ void addRoute(RouteList& list) {
         } else {
             cout << ADDING_ALREADY_EXIST_STR;
             cout << REPEAT_INPUT_STR;
-            system("pause > nul");
+            waitEnter();
         }
     }
     string start = inputString(ADDING_START_STR);
@@ -142,7 +127,7 @@ void addRoute(RouteList& list) {
 
     list.append(Route(newRouteNum, start, end));
 
-    system("cls");
+    clearConsole();
     cout << ADDING_SUCCESS_STR << list.findByNum(newRouteNum);
     backToMenu();
 }
@@ -161,7 +146,7 @@ void deleteRoute(RouteList& list) {
 }
 
 void printRouteList(RouteList& list) {
-    system("cls");
+    clearConsole();
     if (list.isEmpty()) {
         cout << "Список маршрутов пуст" << endl;
     } else {
@@ -235,9 +220,21 @@ void changeRoute(RouteList& list) {
 }
 
 void sortRouteList(RouteList& list) {
-    system("cls");
+    clearConsole();
     cout << SORT_PROCESSING;
     list.sort();
+}
+
+void stripString(string& s) {
+    // Удаление пробельных символов слева
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
+        return !std::isspace(ch);
+        }));
+
+    // Удаление пробельных символов справа
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
+        return !std::isspace(ch);
+        }).base(), s.end());
 }
 
 size_t countUTF8Chars(const std::string& str) {
@@ -264,6 +261,25 @@ size_t countUTF8Chars(const std::string& str) {
         }
     }
     return count;
+}
+
+int mainMenuChoice() {
+    clearConsole();
+    int choice = inputInt(MAIN_MENU_STR, 0, MAIN_MENU_ITEMS_COUNT);
+    return choice;
+}
+
+void backToMenu() {
+    cout << endl << BACK_TO_MENU_STR;
+    waitEnter();
+}
+
+void waitEnter() {
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+void clearConsole() {
+    std::cout << "\x1B[2J\x1B[H";
 }
 
 }

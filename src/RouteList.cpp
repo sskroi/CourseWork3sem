@@ -177,8 +177,9 @@ void RouteList::sort() {
 		for (size_t j = 0; j < (this->_size - i - 1); j++) {
 			if (cur->number > cur->next->number) {
 				swapRoutes(*cur, *(cur->next));
+			} else {
+				cur = cur->next;
 			}
-			cur = cur->next;
 		}
 	}
 }
@@ -293,21 +294,22 @@ int RouteList::maxRouteNum() {
 }
 
 void RouteList::swapRoutes(Route& a, Route& b) {
-	int tempNum;
-	string tempStart;
-	string tempEnd;
+	if (this->head == &a) {
+		this->head = &b;
+		b.prev = nullptr;
+	} else {
+		a.prev->next = &b;
+		b.prev = a.prev;
+	}
 
-	tempNum = a.number;
-	tempStart = a.start;
-	tempEnd = a.end;
-
-	a.number = b.number;
-	a.start = b.start;
-	a.end = b.end;
-
-	b.number = tempNum;
-	b.start = tempStart;
-	b.end = tempEnd;
+	if (b.next == nullptr) {
+		a.next = nullptr;
+	} else {
+		b.next->prev = &a;
+		a.next = b.next;
+	}
+	b.next = &a;
+	a.prev = &b;
 }
 
 std::string RouteList::lowerEnRu(const std::string& str) {

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <cstdint>
 
 #include "RouteList.h"
 
@@ -307,4 +308,39 @@ void RouteList::swapRoutes(Route& a, Route& b) {
 	b.number = tempNum;
 	b.start = tempStart;
 	b.end = tempEnd;
+}
+
+std::string RouteList::lowerEnRu(const std::string& str) {
+	std::string res;
+	size_t i = 0;
+	uint8_t ch1;
+	uint8_t ch2;
+
+	while (i < str.size()) {
+		ch1 = static_cast<uint8_t>(str[i]);
+		if (i + 1 < str.size()) {
+			ch2 = static_cast<uint8_t>(str[i + 1]);
+		}
+
+		if (ch1 >= 65 && ch1 <= 90) {
+			res += static_cast<char>(ch1 + 32);
+			++i;
+		} else if (ch1 == 208 && ch2 >= 144 && ch2 <= 159) {
+			res += static_cast<char>(208);
+			res += static_cast<char>(ch2 + 32);
+			i += 2;
+		} else if (ch1 == 208 && ch2 >= 160 && ch2 <= 175) {
+			res += static_cast<char>(209);
+			res += static_cast<char>(ch2 - 32);
+			i += 2;
+		} else if (ch1 == 208 && ch2 == 129) {
+			res += static_cast<char>(209);
+			res += static_cast<char>(145);
+			i += 2;
+		} else {
+			res += static_cast<char>(ch1);
+			++i;
+		}
+	}
+	return res;
 }

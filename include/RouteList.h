@@ -60,4 +60,6 @@ private:
 	int maxRouteNum();
 
 	static void swapRoutes(Route& a, Route& b);
+
+	static std::string lowerEnRu(const std::string& str);
 };

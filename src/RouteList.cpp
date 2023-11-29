@@ -243,6 +243,9 @@ bool RouteList::readFromFile(const string& fileName) {
 		}
 	}
 	ifile.close();
+	if (curState != readState::num) {
+		throw std::runtime_error("часть данных поврежедена, невозможно корректно прочитать данные");
+	}
 	return true;
 }
 

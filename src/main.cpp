@@ -61,9 +61,9 @@ void initDatabase(RouteList& list) {
         }
         list = fromDb;
     } catch (const std::exception& ex) {
-        std::cout << "Файл с базой данных - \"" << DB_FILENAME << "\" повреждён. \n";
+        std::cout << "\x1B[38;5;197mФайл с базой данных - \"" << DB_FILENAME << "\" повреждён.\x1B[0m\n";
         std::cout << "Ошибка: " << ex.what() << std::endl;
-        std::cout << "Он будет перезаписан новым пустым файлом\n";
+        std::cout << "Он будет перезаписан \x1B[38;5;105mновым пустым\x1B[0m файлом\n";
         std::cout << "Нажмите Enter чтобы перейти в главное меню . . . ";
         menu::waitEnter();
         list.clear();

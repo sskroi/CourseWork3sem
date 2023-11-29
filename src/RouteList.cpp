@@ -197,37 +197,51 @@ int RouteList::maxNumLen() {
 
 bool RouteList::readFromFile(const string& fileName) {
 	ifstream ifile(fileName, ios::in | ios::binary);
-
 	if (!ifile.is_open()) {
 		return false;
 	}
 
-	size_t listSize;
-	ifile.read(reinterpret_cast<char*>(&listSize), sizeof(listSize));
+	enum class readState { num, start, end };
+	readState curState = readState::num;
 
-	int curNum;
-	size_t curStartBufSize;
-	char* curStartBuf;
-	size_t curEndBufSize;
-	char* curEndBuf;
+	int num;
+	string start = "";
+	string end = "";
+	char temp;
 
-	for (size_t i = 0; i < listSize; i++) {
-		ifile.read(reinterpret_cast<char*>(&curNum), sizeof(curNum));
-
-		ifile.read(reinterpret_cast<char*>(&curStartBufSize), sizeof(curStartBufSize));
-		curStartBuf = new char[curStartBufSize];
-		ifile.read(curStartBuf, curStartBufSize);
-
-		ifile.read(reinterpret_cast<char*>(&curEndBufSize), sizeof(curEndBufSize));
-		curEndBuf = new char[curEndBufSize];
-		ifile.read(curEndBuf, curEndBufSize);
-
-		this->append(Route(curNum, string(curStartBuf), string(curEndBuf)));
-
-		delete[] curStartBuf;
-		delete[] curEndBuf;
+	while (!ifile.eof()) {
+		if (curState == readState::num) {
+			ifile.read(reinterpret_cast<char*>(&num), sizeof(num));
+			if (ifile.eof()) { break; }
+			if (num < 1) {
+				throw std::runtime_error("некорректные данные для номера (не положительное число)");
+			}
+			curState = readState::start;
+		} else if (curState == readState::start) {
+			ifile.read(&temp, sizeof(temp));
+			if (ifile.eof()) { break; }
+			if (temp == '\0') {
+				curState = readState::end;
+			} else if (temp >= 1 && temp <= 31) {
+				throw std::runtime_error("некорректные данные строки (в строке обнаружен управляющий сивол)");
+			} else {
+				start += temp;
+			}
+		} else if (curState == readState::end) {
+			ifile.read(&temp, sizeof(temp));
+			if (ifile.eof()) { break; }
+			if (temp == '\0') {
+				this->append(Route(num, start, end));
+				start.clear();
+				end.clear();
+				curState = readState::num;
+			} else if (temp >= 1 && temp <= 31) {
+				throw std::runtime_error("некорректные данные строки (в строке обнаружен управляющий сивол)");
+			} else {
+				end += temp;
+			}
+		}
 	}
-
 	ifile.close();
 	return true;
 }
@@ -235,24 +249,16 @@ bool RouteList::readFromFile(const string& fileName) {
 void RouteList::writeInFile(const string& fileName) {
 	ofstream oFile(fileName, ios::out | ios::binary);
 
-	oFile.write(reinterpret_cast<const char*>(&(this->_size)), sizeof(this->_size));
-
 	Route* cur = this->head;
 
 	while (cur != nullptr) {
 		oFile.write(reinterpret_cast<const char*>(&(cur->number)), sizeof(cur->number));
 
-		size_t startLen = cur->start.size() + 1;
-		oFile.write(reinterpret_cast<const char*>(&startLen), sizeof(startLen));
-		oFile.write(cur->start.c_str(), startLen);
-
-		size_t endLen = cur->end.size() + 1;
-		oFile.write(reinterpret_cast<const char*>(&endLen), sizeof(endLen));
-		oFile.write(cur->end.c_str(), endLen);
+		oFile.write(cur->start.c_str(), cur->start.size() + 1);
+		oFile.write(cur->end.c_str(), cur->end.size() + 1);
 
 		cur = cur->next;
 	}
-
 	oFile.close();
 }
 

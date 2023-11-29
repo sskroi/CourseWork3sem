@@ -52,16 +52,17 @@ void initDatabase(RouteList& list) {
     RouteList fromDb;
     try {
         if (!fromDb.readFromFile(DB_FILENAME)) {
-            std::cout << "!!! Файл с базой данных - \"" << DB_FILENAME << "\"\n";
-            std::cout << "НЕ обнаружен в директории программы\n";
-            std::cout << "Будет создан пустой файл с БД\n\n";
+            std::cout << "\x1B[38;5;197mФайл с базой данных - \"" << DB_FILENAME << "\"\n";
+            std::cout << "НЕ обнаружен в директории программы\x1B[0m\n";
+            std::cout << "Будет создан \x1B[38;5;105mпустой\x1B[0m файл с БД\n\n";
             std::cout << "Нажмите Enter чтобы перейти в главное меню . . . ";
             menu::waitEnter();
             fromDb.writeInFile(DB_FILENAME);
         }
         list = fromDb;
-    } catch (...) {
-        std::cout << "!!! Файл с базой данных - \"" << DB_FILENAME << "\" повреждён. \n";
+    } catch (const std::exception& ex) {
+        std::cout << "Файл с базой данных - \"" << DB_FILENAME << "\" повреждён. \n";
+        std::cout << "Ошибка: " << ex.what() << std::endl;
         std::cout << "Он будет перезаписан новым пустым файлом\n";
         std::cout << "Нажмите Enter чтобы перейти в главное меню . . . ";
         menu::waitEnter();

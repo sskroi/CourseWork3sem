@@ -10,7 +10,7 @@ public:
 
 	RouteList(const RouteList& other);
 
-	RouteList operator=(const RouteList& other);
+	RouteList& operator=(const RouteList& other);
 
 	void append(const Route& route);
 
@@ -20,9 +20,9 @@ public:
 
 	Route& findByNum(int numOfRoute);
 
-	RouteList findByStart(const std::string &searchStart);
+	RouteList findByStart(const std::string& searchStart);
 
-	RouteList findByEnd(const std::string &searchEnd);
+	RouteList findByEnd(const std::string& searchEnd);
 
 	void changeRouteNumber(int oldRouteNum, int newRouteNum);
 
@@ -49,13 +49,13 @@ public:
 		RouteNotExistErr(const std::string& msg);
 	};
 
+	void clear();
+
 	~RouteList();
 
 private:
 	Route* head = nullptr;
 	size_t _size = 0;
-
-	void clear();
 
 	int maxRouteNum();
 

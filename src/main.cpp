@@ -48,20 +48,34 @@ void mainLoop(RouteList& list) {
     }
 }
 
+void initDatabase(RouteList& list) {
+    RouteList fromDb;
+    try {
+        if (!fromDb.readFromFile(DB_FILENAME)) {
+            std::cout << "!!! Файл с базой данных - \"" << DB_FILENAME << "\"\n";
+            std::cout << "НЕ обнаружен в директории программы\n";
+            std::cout << "Будет создан пустой файл с БД\n\n";
+            std::cout << "Нажмите Enter чтобы перейти в главное меню . . . ";
+            menu::waitEnter();
+            fromDb.writeInFile(DB_FILENAME);
+        }
+        list = fromDb;
+    } catch (...) {
+        std::cout << "!!! Файл с базой данных - \"" << DB_FILENAME << "\" повреждён. \n";
+        std::cout << "Он будет перезаписан новым пустым файлом\n";
+        std::cout << "Нажмите Enter чтобы перейти в главное меню . . . ";
+        menu::waitEnter();
+        list.clear();
+        list.writeInFile(DB_FILENAME);
+    }
+}
 
 int main() {
     // основной список, хранящий все маршруты
     RouteList list;
 
-    // чтение БД
-    if (!list.readFromFile(DB_FILENAME)) {
-        std::cout << "!!! Файл с базой данных - \"" << DB_FILENAME << "\"\n";
-        std::cout << "НЕ обнаружен в директории программы\n";
-        std::cout << "Будет создан пустой файл с БД\n\n";
-        std::cout << "Нажмите Enter чтобы перейти в главное меню . . . ";
-        menu::waitEnter();
-        list.writeInFile(DB_FILENAME);
-    };
+    // инициализация базы данных
+    initDatabase(list);
 
     // запуска основного цикла программы
     mainLoop(list);

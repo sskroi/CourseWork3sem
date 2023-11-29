@@ -26,7 +26,7 @@ RouteList::RouteList(const RouteList& other) {
 	}
 }
 
-RouteList RouteList::operator=(const RouteList& other) {
+RouteList& RouteList::operator=(const RouteList& other) {
 	this->clear();
 
 	Route* cur = other.head;

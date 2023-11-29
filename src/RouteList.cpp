@@ -109,13 +109,13 @@ Route& RouteList::findByNum(int numOfRoute) {
 	throw RouteNotExistErr("the route with this number is not in the list");
 }
 
-RouteList RouteList::findByStart(const string searchStart) {
+RouteList RouteList::findByStart(const string& searchStart) {
 	RouteList result;
 
 	Route* cur = this->head;
 
 	while (cur != nullptr) {
-		if (cur->start.find(searchStart) != std::string::npos) {
+		if (this->lowerEnRu(cur->start).find(this->lowerEnRu(searchStart)) != std::string::npos) {
 			result.append(*cur);
 		}
 		cur = cur->next;
@@ -124,13 +124,13 @@ RouteList RouteList::findByStart(const string searchStart) {
 	return result;
 }
 
-RouteList RouteList::findByEnd(const string searchEnd) {
+RouteList RouteList::findByEnd(const string& searchEnd) {
 	RouteList result;
 
 	Route* cur = this->head;
 
 	while (cur != nullptr) {
-		if (cur->end.find(searchEnd) != std::string::npos) {
+		if (this->lowerEnRu(cur->end).find(this->lowerEnRu(searchEnd)) != std::string::npos) {
 			result.append(*cur);
 		}
 		cur = cur->next;

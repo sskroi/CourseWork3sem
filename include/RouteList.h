@@ -20,9 +20,9 @@ public:
 
 	Route& findByNum(int numOfRoute);
 
-	RouteList findByStart(const std::string searchStart);
+	RouteList findByStart(const std::string &searchStart);
 
-	RouteList findByEnd(const std::string searchEnd);
+	RouteList findByEnd(const std::string &searchEnd);
 
 	void changeRouteNumber(int oldRouteNum, int newRouteNum);
 

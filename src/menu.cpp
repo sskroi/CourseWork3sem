@@ -60,7 +60,8 @@ string inputString(const string& prompt, size_t maxLen) {
             if (countUTF8Chars(input) < 1) {
                 cout << EMPTY_STRING_STR;
             } else {
-                cout << incorrectInputStringLenStr(maxLen);
+                cout << "\n" << INCORRECT_INPUT_STR;
+                cout << "максимальная длина строки " << maxLen << " символов\n";
             }
             cout << REPEAT_INPUT_STR;
             waitEnter();

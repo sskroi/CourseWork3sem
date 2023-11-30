@@ -68,22 +68,4 @@ const string CHANGE_INPUT_END_STR = "Введите новый конечный 
 
 const string SORT_PROCESSING = "Сортировка начата . . . \n";
 
-string incorrectIntInputStr(int l, int r) {
-    string res;
-
-    res += "\n" + INCORRECT_INPUT_STR;
-    res += "введите целое число в диапазоне [" + to_string(l) + "; " + to_string(r) + "]\n";;
-
-    return res;
-}
-
-string incorrectInputStringLenStr(size_t maxLen) {
-    string res;
-
-    res += "\n" + INCORRECT_INPUT_STR;
-    res += "максимальная длина строки = " + to_string(maxLen) + " символов\n";
-
-    return res;
-}
-
 }

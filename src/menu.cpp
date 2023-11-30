@@ -37,8 +37,8 @@ int inputInt(std::string prompt, int l, int r) {
         }
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "\nНекорректный ввод: введите целое число в диапазоне [" << l << "; " << r << "]\n";
-        std::cout << "Нажмите Enter для повторного ввода . . . ";
+        std::cout << "\n\x1B[38;5;167mНекорректный ввод:\x1B[0m введите целое число в диапазоне [" << l << "; " << r << "]\n";
+        std::cout << "Нажмите \x1B[38;5;216mEnter\x1B[0m для повторного ввода . . . ";
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 }

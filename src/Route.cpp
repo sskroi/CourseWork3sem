@@ -15,7 +15,7 @@ Route::Route(const Route& r)
 string Route::str(int numberIndent, bool endline) {
     stringstream s;
 
-    s << setw(numberIndent) << this->number << " | " << this->start << " -> " << this->end;
+    s << setw(numberIndent) << this->number << " \x1B[38;5;246m|\x1B[0m " << this->start << " \x1B[38;5;246m->\x1B[0m " << this->end;
     if (endline) s << endl;
 
     return s.str();

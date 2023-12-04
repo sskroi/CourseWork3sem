@@ -215,6 +215,8 @@ bool RouteList::readFromFile(const string& fileName) {
 			if (ifile.eof()) { break; }
 			if (num < 1) {
 				throw std::runtime_error("некорректные данные для номера маршрута (не положительное число)");
+			} else if (num > 1'000'000) {
+				throw std::runtime_error("некорректные данные для номера маршрута (число >1.000.000)");
 			}
 			curState = readState::start;
 		} else if (curState == readState::start) {

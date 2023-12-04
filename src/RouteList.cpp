@@ -214,7 +214,7 @@ bool RouteList::readFromFile(const string& fileName) {
 			ifile.read(reinterpret_cast<char*>(&num), sizeof(num));
 			if (ifile.eof()) { break; }
 			if (num < 1) {
-				throw std::runtime_error("некорректные данные для номера (не положительное число)");
+				throw std::runtime_error("некорректные данные для номера маршрута (не положительное число)");
 			}
 			curState = readState::start;
 		} else if (curState == readState::start) {
@@ -223,7 +223,7 @@ bool RouteList::readFromFile(const string& fileName) {
 			if (temp == '\0') {
 				curState = readState::end;
 			} else if (temp >= 1 && temp <= 31) {
-				throw std::runtime_error("некорректные данные строки (в строке обнаружен управляющий сивол)");
+				throw std::runtime_error("некорректные данные строки (в строке содержится управляющий сивол)");
 			} else {
 				start += temp;
 			}
@@ -244,7 +244,7 @@ bool RouteList::readFromFile(const string& fileName) {
 	}
 	ifile.close();
 	if (curState != readState::num) {
-		throw std::runtime_error("часть данных поврежедена, невозможно корректно прочитать данные");
+		throw std::runtime_error("отсутствует часть данных, невозможно корректно прочитать файл");
 	}
 	return true;
 }

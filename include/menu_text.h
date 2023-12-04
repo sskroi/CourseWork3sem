@@ -38,7 +38,7 @@ const string DELETING_SUCCESS = "\nМаршрут успешно удалён\n"
 
 // finding
 const string ROUTE_FIND_MENU_STR =
-"«« Поиск »»\n"
+"«« \x1B[1m\x1B[38;5;209mПоиск\x1B[0m »»\n"
 "\x1B[38;5;216m1\x1B[0m) По номеру\n"
 "\x1B[38;5;216m2\x1B[0m) По пункту отправления\n"
 "\x1B[38;5;216m3\x1B[0m) По пункту прибытия\n"

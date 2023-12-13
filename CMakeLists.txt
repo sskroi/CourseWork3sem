@@ -11,4 +11,9 @@ add_executable(CourseWork3sem
     src/Route.cpp
 )
 
+if(UNIX AND CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(CourseWork3sem PUBLIC -fsanitize=address)
+    target_link_options(CourseWork3sem PUBLIC -fsanitize=address)
+endif()
+
 target_include_directories(CourseWork3sem PRIVATE ${CMAKE_SOURCE_DIR}/include)

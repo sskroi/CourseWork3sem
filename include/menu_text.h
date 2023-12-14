@@ -5,7 +5,7 @@ using namespace std;
 
 namespace menu {
 
-const string INPUT_STR = "Выберите дейсвтие \x1B[38;5;216m>>\x1B[0m ";
+const string INPUT_STR = "Выберите действие \x1B[38;5;216m>>\x1B[0m ";
 const string INCORRECT_INPUT_STR = "\x1B[38;5;167mНекорректный ввод:\x1B[0m ";
 const string BACK_TO_MENU_STR = "Нажмите \x1B[38;5;216mEnter\x1B[0m чтобы вернуться в меню . . . ";
 

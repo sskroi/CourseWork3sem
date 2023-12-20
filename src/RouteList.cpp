@@ -200,12 +200,12 @@ bool RouteList::readFromFile(const string& fileName) {
 	}
 
 	enum class readState { num, start, end };
-	std::set<int> nums;
 	readState curState = readState::num;
 
+	std::set<int> nums;
+	string start;
+	string end;
 	int num;
-	string start = "";
-	string end = "";
 	char temp;
 
 	while (!ifile.eof()) {

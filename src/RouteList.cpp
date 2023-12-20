@@ -25,7 +25,6 @@ RouteList::RouteList(const RouteList& other) {
 }
 
 RouteList::RouteList(RouteList&& other) {
-	this->clear();
 	this->head = other.head;
 	this->_size = other._size;
 

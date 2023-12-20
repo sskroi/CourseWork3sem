@@ -20,6 +20,10 @@ int inputInt(std::string prompt, int l, int r) {
     while (true) {
         std::cout << "\x1B[2J\x1B[H" << prompt;
 
+        while (std::cin.peek() == ' ') {
+            cin.ignore(1);
+        }
+
         if (std::cin.peek() != '\n') {
             std::cin >> inputNum;
 

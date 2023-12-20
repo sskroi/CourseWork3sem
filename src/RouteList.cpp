@@ -212,7 +212,9 @@ bool RouteList::readFromFile(const string& fileName) {
 	while (!ifile.eof()) {
 		if (curState == readState::num) {
 			ifile.read(reinterpret_cast<char*>(&num), sizeof(num));
-			if (ifile.eof()) { break; }
+			if (ifile.eof()) {
+				break;
+			}
 			if (num < 1) {
 				throw std::runtime_error("некорректные данные для номера маршрута (не положительное число)");
 			} else if (num > 1'000'000) {
@@ -221,7 +223,9 @@ bool RouteList::readFromFile(const string& fileName) {
 			curState = readState::start;
 		} else if (curState == readState::start) {
 			ifile.read(&temp, sizeof(temp));
-			if (ifile.eof()) { break; }
+			if (ifile.eof()) {
+				break;
+			}
 			if (temp == '\0') {
 				curState = readState::end;
 			} else if (temp >= 1 && temp <= 31) {
@@ -231,7 +235,9 @@ bool RouteList::readFromFile(const string& fileName) {
 			}
 		} else if (curState == readState::end) {
 			ifile.read(&temp, sizeof(temp));
-			if (ifile.eof()) { break; }
+			if (ifile.eof()) {
+				break;
+			}
 			if (temp == '\0') {
 				this->append(Route(num, start, end));
 				start.clear();

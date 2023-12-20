@@ -10,7 +10,11 @@ public:
 
 	RouteList(const RouteList& other);
 
+	RouteList(RouteList&& other);
+
 	RouteList& operator=(const RouteList& other);
+
+	RouteList& operator=(RouteList&& other);
 
 	void append(const Route& route);
 

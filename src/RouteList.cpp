@@ -24,6 +24,14 @@ RouteList::RouteList(const RouteList& other) {
 	}
 }
 
+RouteList::RouteList(RouteList&& other) {
+	this->head = other.head;
+	this->_size = other._size;
+
+	other.head = nullptr;
+	other._size = 0;
+}
+
 RouteList& RouteList::operator=(const RouteList& other) {
 	this->clear();
 
@@ -33,6 +41,16 @@ RouteList& RouteList::operator=(const RouteList& other) {
 
 		cur = cur->next;
 	}
+
+	return *this;
+}
+
+RouteList& RouteList::operator=(RouteList&& other) {
+	this->head = other.head;
+	this->_size = other._size;
+
+	other.head = nullptr;
+	other._size = 0ULL;
 
 	return *this;
 }

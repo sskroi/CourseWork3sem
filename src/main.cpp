@@ -58,7 +58,8 @@ void initDatabase(RouteList& list) {
             menu::waitEnter();
             fromDb.writeInFile(DB_FILENAME);
         }
-        list = fromDb;
+        list = std::move(fromDb);
+        
     } catch (const std::exception& ex) {
         std::cout << "\x1B[38;5;197mФайл с базой данных \"\x1B[38;5;122m" << DB_FILENAME << "\x1B[38;5;197m\" повреждён.\x1B[0m\n";
         std::cout << "Ошибка: " << ex.what() << std::endl;

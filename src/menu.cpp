@@ -2,7 +2,6 @@
 #include <limits>
 #include <iomanip>
 #include <string>
-#include <fstream>
 #include <algorithm>
 
 #include "menu_text.h"

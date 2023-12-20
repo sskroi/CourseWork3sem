@@ -1,12 +1,9 @@
-#include <iostream>
 #include <string>
 #include <fstream>
-#include <sstream>
 #include <iomanip>
 #include <cstdint>
 
 #include "RouteList.h"
-
 
 using namespace std;
 
@@ -221,6 +218,7 @@ bool RouteList::readFromFile(const string& fileName) {
 				throw std::runtime_error("некорректные данные для номера маршрута (число >1.000.000)");
 			}
 			curState = readState::start;
+
 		} else if (curState == readState::start) {
 			ifile.read(&temp, sizeof(temp));
 			if (ifile.eof()) {
@@ -233,6 +231,7 @@ bool RouteList::readFromFile(const string& fileName) {
 			} else {
 				start += temp;
 			}
+
 		} else if (curState == readState::end) {
 			ifile.read(&temp, sizeof(temp));
 			if (ifile.eof()) {

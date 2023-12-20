@@ -1,6 +1,7 @@
 #include <string>
 #include <fstream>
 #include <iomanip>
+#include <set>
 #include <cstdint>
 
 #include "RouteList.h"
@@ -199,6 +200,7 @@ bool RouteList::readFromFile(const string& fileName) {
 	}
 
 	enum class readState { num, start, end };
+	std::set<int> nums;
 	readState curState = readState::num;
 
 	int num;
@@ -216,7 +218,10 @@ bool RouteList::readFromFile(const string& fileName) {
 				throw std::runtime_error("некорректные данные для номера маршрута (не положительное число)");
 			} else if (num > 1'000'000) {
 				throw std::runtime_error("некорректные данные для номера маршрута (число >1.000.000)");
+			} else if (nums.contains(num)) {
+				throw std::logic_error("в файле обнаружены маршруты с одинаковыми номерами");
 			}
+			nums.insert(num);
 			curState = readState::start;
 
 		} else if (curState == readState::start) {
@@ -253,6 +258,7 @@ bool RouteList::readFromFile(const string& fileName) {
 	if (curState != readState::num) {
 		throw std::runtime_error("отсутствует часть данных, невозможно корректно прочитать файл");
 	}
+
 	return true;
 }
 

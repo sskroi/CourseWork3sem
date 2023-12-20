@@ -19,23 +19,17 @@ void mainLoop(RouteList& list) {
 
             if (choice == 1) {
                 menu::printRouteList(list);
-            }
-            else if (choice == 2) {
+            } else if (choice == 2) {
                 menu::findRoute(list);
-            }
-            else if (choice == 3) {
+            } else if (choice == 3) {
                 menu::addRoute(list);
-            }
-            else if (choice == 4) {
+            } else if (choice == 4) {
                 menu::deleteRoute(list);
-            }
-            else if (choice == 5) {
+            } else if (choice == 5) {
                 menu::changeRoute(list);
-            }
-            else if (choice == 6) {
+            } else if (choice == 6) {
                 menu::sortRouteList(list);
-            }
-            else if (choice == 0) {
+            } else if (choice == 0) {
                 return;
             }
 
@@ -64,7 +58,7 @@ void initDatabase(RouteList& list) {
     } catch (const std::exception& ex) {
         std::cout << "\x1B[38;5;197mФайл с базой данных \"\x1B[38;5;122m" << DB_FILENAME << "\x1B[38;5;197m\" повреждён.\x1B[0m\n";
         std::cout << "Ошибка: " << ex.what() << std::endl;
-        std::cout << "Он будет перезаписан \x1B[38;5;105mновым пустым\x1B[0m файлом\n";
+        std::cout << "Файл будет перезаписан \x1B[38;5;105mновым пустым\x1B[0m файлом\n";
         std::cout << "Нажмите \x1B[38;5;216mEnter\x1B[0m чтобы перейти в главное меню . . . ";
         menu::waitEnter();
         list.clear();

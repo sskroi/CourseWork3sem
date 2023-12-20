@@ -20,7 +20,7 @@ int inputInt(std::string prompt, int l, int r) {
     while (true) {
         std::cout << "\x1B[2J\x1B[H" << prompt;
 
-        while (std::cin.peek() == ' ') {
+        while (std::cin.peek() == ' ' || std::cin.peek() == '\t') {
             cin.ignore(1);
         }
 
@@ -32,7 +32,7 @@ int inputInt(std::string prompt, int l, int r) {
                     ch = std::cin.get();
                     if (ch == '\n') {
                         return inputNum;
-                    } else if (ch != ' ') {
+                    } else if (ch != ' ' && ch != '\t') {
                         break;
                     }
                 }

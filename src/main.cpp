@@ -35,8 +35,12 @@ void mainLoop(RouteList& list) {
 
             list.writeInFile(DB_FILENAME);
 
+        } catch (const std::exception& ex) {
+            std::cout << "Произошла ошибка: " << ex.what() << std::endl;
+            std::cout << "Нажмите \x1B[38;5;216mEnter\x1B[0m чтобы перейти в главное меню . . . ";
+            menu::waitEnter();
         } catch (...) {
-            std::cout << "Произошла ошибка" << std::endl;
+            std::cout << "Произошла неизвестная ошибка" << std::endl;
             std::cout << "Нажмите \x1B[38;5;216mEnter\x1B[0m чтобы перейти в главное меню . . . ";
             menu::waitEnter();
         }

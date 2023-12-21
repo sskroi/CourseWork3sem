@@ -16,34 +16,21 @@ namespace menu {
 int inputInt(std::string prompt, int l, int r) {
     int inputNum;
     char ch;
+    std::cout << "\x1B[2J\x1B[H" << prompt;
+    std::cin >> inputNum;
 
-    while (true) {
-        std::cout << "\x1B[2J\x1B[H" << prompt;
-
-        while (std::cin.peek() == ' ' || std::cin.peek() == '\t') {
-            cin.ignore(1);
-        }
-
-        if (std::cin.peek() != '\n') {
-            std::cin >> inputNum;
-
-            if (!std::cin.fail() && inputNum >= l && inputNum <= r) {
-                while (true) {
-                    ch = std::cin.get();
-                    if (ch == '\n') {
-                        return inputNum;
-                    } else if (ch != ' ' && ch != '\t') {
-                        break;
-                    }
-                }
-            }
-        }
+    while (cin.fail()) {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "\n\x1B[38;5;167mНекорректный ввод:\x1B[0m введите целое число в диапазоне [" << l << "; " << r << "]\n";
         std::cout << "Нажмите \x1B[38;5;216mEnter\x1B[0m для повторного ввода . . . ";
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        std::cout << "\x1B[2J\x1B[H" << prompt;
+        std::cin >> inputNum;
     }
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return inputNum;
 }
 
 // функция для ввода строки с ограничением максимальной длины

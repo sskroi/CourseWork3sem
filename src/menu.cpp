@@ -19,7 +19,7 @@ int inputInt(std::string prompt, int l, int r) {
     std::cout << "\x1B[2J\x1B[H" << prompt;
     std::cin >> inputNum;
 
-    while (cin.fail()) {
+    while (cin.fail() || inputNum < l || inputNum > r) {
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cout << "\n\x1B[38;5;167mНекорректный ввод:\x1B[0m введите целое число в диапазоне [" << l << "; " << r << "]\n";

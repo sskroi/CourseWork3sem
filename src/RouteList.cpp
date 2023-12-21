@@ -270,9 +270,9 @@ bool RouteList::readFromFile(const string& fileName) {
 		}
 	}
 	ifile.close();
-	if (curState != readState::num) {
-		throw std::runtime_error("отсутствует часть данных, невозможно корректно прочитать файл");
-	}
+	// if (curState != readState::num) {
+	// 	throw std::runtime_error("отсутствует часть данных, невозможно корректно прочитать файл");
+	// }
 
 	return true;
 }

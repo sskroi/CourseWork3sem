@@ -250,8 +250,6 @@ bool RouteList::readFromFile(const string& fileName) {
 			}
 			if (temp == '\0') {
 				curState = readState::end;
-			} else if (temp >= 1 && temp <= 31) {
-				throw std::runtime_error("некорректные данные строки (в строке содержится управляющий сивол)");
 			} else {
 				start += temp;
 			}
@@ -266,8 +264,6 @@ bool RouteList::readFromFile(const string& fileName) {
 				start.clear();
 				end.clear();
 				curState = readState::num;
-			} else if (temp >= 1 && temp <= 31) {
-				throw std::runtime_error("некорректные данные строки (в строке обнаружен управляющий сивол)");
 			} else {
 				end += temp;
 			}

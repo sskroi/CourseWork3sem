@@ -247,19 +247,15 @@ size_t countUTF8Chars(const std::string& str) {
         unsigned char ch = static_cast<unsigned char>(str[i]);
 
         if (ch <= 0x7F) {
-            // single byte character
             ++count;
             ++i;
         } else if (ch <= 0xDF) {
-            // two byte character
             count += 1;
             i += 2;
         } else if (ch <= 0xEF) {
-            // three byte character
             count += 1;
             i += 3;
         } else {
-            // four byte character
             count += 1;
             i += 4;
         }
